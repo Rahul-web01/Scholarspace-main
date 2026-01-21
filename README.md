@@ -5,38 +5,33 @@
 
 ## 📖 About The Project
 
-**Scholarspace** is a web-based platform designed to [Briefly describe what your app does, e.g., help students share notes, manage academic resources, or collaborate on projects]. 
+**Scholarspace** is a web-based platform designed to help Students to share notes and previous year question papers and manage academic resources. 
 
-The goal of this project is to create an accessible and efficient environment for [Target Audience, e.g., students and educators] to [Main Goal, e.g., organize their study materials].
+The goal of this project is to create an accessible and efficient environment for Students and Educators to find the organize study materials at one place.
 
 ### ✨ Key Features
 * ✅ **User Authentication**: Secure login and signup for students.
 * ✅ **Resource Sharing**: Upload and download study materials easily.
 * ✅ **Responsive Design**: Works smoothly on mobile and desktop.
-* ✅ **[Feature 3]**: [Description of another cool feature].
-* ✅ **[Feature 4]**: [Description of another cool feature].
-
+* ✅ **Preview Mode**: View documents directly in the browser without downloading them first.
+  
 ---
 
 ## 🛠️ Tech Stack
 
-This project is built using the following technologies:
-
-* **Frontend**: HTML, CSS, JavaScript (or React.js if applicable)
-* **Backend**: Node.js, Express.js (Delete if not used)
-* **Database**: MongoDB / MySQL (Delete if not used)
+* **Frontend**: HTML, CSS, JavaScript.
 * **Version Control**: Git & GitHub
 
 ---
 
 ## 🚀 Getting Started
 
-Follow these instructions to set up the project locally on your machine.
+To run this project locally on your computer, follow these steps:
 
 ### Prerequisites
-Make sure you have the following installed:
-* [Node.js](https://nodejs.org/) (if using Node)
-* [Git](https://git-scm.com/)
+You only need a web browser (Chrome, Edge, Firefox) and a code editor (VS Code).
+
+---
 
 ### Installation
 
@@ -85,7 +80,7 @@ Contributions are always welcome! If you have suggestions or want to improve thi
 ## 📬 Contact
 
 **Rahul Singh** - GitHub: [@Rahul-web01](https://github.com/Rahul-web01)
-- Email: [Your Email Here]
+- Email: contact.rahul82@gmail.com
 - LinkedIn: [Your LinkedIn Profile Link Here]
 
 Project Link: [https://github.com/Rahul-web01/Scholarspace-main](https://github.com/Rahul-web01/Scholarspace-main)
