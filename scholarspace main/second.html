@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Resource Hub</title>
+    <link rel="shortcut icon" href="letter-s (1).png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+   <link rel="stylesheet" href="course1.css">
+</head>
+<body>
+    <!-- Your Header Here --><header>
+        <a href="index.html" class="logo-link">
+            <div class="logo">
+              <i class="fas fa-graduation-cap"></i> 
+              ScholarSpace
+            </div>
+          </a>      <nav>
+        <ul class="cont">
+          <li><a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a></li>
+          <li><a href="uni1.html"><i class="fas fa-book-open nav-icon"></i> Explore Notes</a></li>
+          <li><a href="sgpa/index.html"><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a></li>
+          <li><a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a></li>
+          <li><a href="about.html"><i class="fas fa-info-circle nav-icon"></i> About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Hamburger Icon -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="mobile-nav" id="mobileMenu">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a></li>
+            <li><a href="uni1.html"><i class="fas fa-book-open nav-icon"></i> Explore Notes</a></li>
+            <li><a href="sgpa/index.html"><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a></li>
+            <li><a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle nav-icon"></i> About Us</a></li>
+        </ul>
+    </div>
+    </header>
+ 
+    <div class="container">
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://www.mygreatlearning.com/blog/wp-content/uploads/2020/07/BLOG-Images_7-7-2020-06.png" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Data Structure Using C</h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/1-wb8T9H3W4Xaq0g8tEMoRR465_C4iZiZ?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/10Wq0wKqyEOQq6aVmZRUu-rqkvztd8keq?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a href="https://youtube.com/playlist?list=PLu0W_9lII9ahIappRPN0MCAgtOu3lQjQi&si=TirOjC936Fb5irnh" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a href="https://drive.google.com/file/d/1-TlmQl2ZN9h8OxQvXD7DwTnI8plnia-P/view?usp=drive_link" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Practice Set
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://res.cloudinary.com/upwork-cloud/image/upload/c_scale,w_1000/v1689614058/catalog/1680987863856074752/wwa78jw925gevqwq7a2v.jpg" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Digital Logic Design</h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/165ZBEhX4px9gpU2V6o_PTD4txyoTSver?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/11oRlP9dGsfzpcBoPaCT7ZjaNw82aCc98?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a href="https://youtube.com/playlist?list=PLBlnK6fEyqRjMH3mWf6kwqiTbT798eAOm&si=h67WObC1on2LKc9t" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a href="https://drive.google.com/file/d/1-RFl2cjAW8y1GKg9S7ca_UFnIwy2xWAm/view?usp=drive_link" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Practice Set
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5mhVL0O_4uDfw6_PrjB6AZUcBy-3YRbXj_Q&s" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Discrete Mathematics  </h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/1-HLFEG7z9kzo9PmdRUAS6KOt-x3iOgNO?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/1-lpJ5_lfzy7kYP1tvFGM09O4uQaiTEiq?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a href="https://youtube.com/playlist?list=PLU6SqdYcYsfJ27O0dvuMwafS3X8CecqUg&si=8G9Zmj3pWTxRxAnZ" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Practice Set
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="subject/COMPLEX ANALYSIS AND INTEGRAL TRANSFORMATION LOGO.jpg" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Complex Analysis & Integral Transformation </h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/15TU6Fqz-YhdxA_79k2JyenY9u3EIO2qr?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/11uIDYqXgLY21OOusxiDN8jJ7m7XFZcwy?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Video Lecture
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9PcMfDNimeQGfeijWmxJqAfmbAIe2kXaDcw&s" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3> Core & Advance Java </h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/11xH20g99fJRAWQPX2c_V9-3u5gU2FAwE?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/125YZsaBxPUXUD3WxvQ-VkrCejaRvea3X?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a href="https://youtube.com/playlist?list=PLu0W_9lII9agS67Uits0UnJyrYiXhDS6q&si=XBB7hdF2nY4nQbD2" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a href="https://drive.google.com/file/d/1-YCqo18oQ8NUlTeiqVI40sBojIGY-nrn/view?usp=drive_link" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                       Practice Set
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://swarajya.gumlet.io/swarajya/2018-08/e58c3f38-1efd-4aca-b229-b22baa0f0376/5f25ca8f_e8e0_4138_bcd4_5db77a4b9747.jpg?w=610&q=50&compress=true&format=auto" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Indian Constitution</h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/1-wXC9TEthg5IwJehPbO7ScWpPH_oyi-_?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/15B19cv0BAid5BZetHFIzAzwVRMQe3YxW?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Practice Set
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://swarajya.gumlet.io/swarajya/2018-08/e58c3f38-1efd-4aca-b229-b22baa0f0376/5f25ca8f_e8e0_4138_bcd4_5db77a4b9747.jpg?w=610&q=50&compress=true&format=auto" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Organisational Behaviour</h3>
+                <div class="btn-group"> 
+                    <a href="https://drive.google.com/drive/folders/15RGLH9bvdt_gqMQKsHzhLv6zxq88LprM?usp=drive_link" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a href="https://drive.google.com/drive/folders/159G1lGcd2tWI1rdqzmrT4ldbXSvPEjfd?usp=drive_link" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a href="https://youtube.com/playlist?list=PLsh2FvSr3n7de4MNZdEb3WMePB4zSMnPa&si=zbK0UikwJmN7h8Ps" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Practice Set
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://media.licdn.com/dms/image/v2/D5612AQGJ0o1OoO-iCQ/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1712494804051?e=2147483647&v=beta&t=i3zpF_vbawCN0xX8YYJYiakcD_gUxZ45O5a36EvYrso" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Statistical & Numerical techniques</h3>
+                <div class="btn-group"> 
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Video Lecture
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://smsvaranasi.com/uploads/news/79/The-Considerations-And-Perks-Of-Choosing-A-DBMS-ITs-Guru.png" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>DataBase Management System </h3>
+                <div class="btn-group"> 
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Video Lecture
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://i0.wp.com/jobdekhoguru.com/wp-content/uploads/2023/03/New-Project-2-3.jpg?fit=1200%2C630&ssl=1&resize=350%2C200" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Computer Organisation & Architecture </h3>
+                <div class="btn-group"> 
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Video Lecture
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://img.freepik.com/premium-vector/word-cloud-background-concept-software-engineering-computer-programming-system-cloud-technology-development-application-management-vector-illustration_616200-4832.jpg" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Software Engineering  </h3>
+                <div class="btn-group"> 
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Video Lecture
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://blogassets.leverageedu.com/blog/wp-content/uploads/2019/09/23164444/Career-in-Industrial-Sociology.jpg" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Industrial Sociology</h3>
+                <div class="btn-group"> 
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn">
+                        <i class="fa-solid fa-file"></i>
+                        <!-- <i class="fas fa-rocket"></i> -->
+                        Notes
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-file-circle-question"></i>
+                        PYQ Papers
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <!-- <i class="fas fa-code"></i> -->
+                        <i class="fa-solid fa-video"></i>
+                        Video Lecture
+                    </a>
+                    <a onclick="alert('will be uploaded soon!')" class="card-btn code-btn">
+                        <i class="fa-solid fa-circle-question"></i>
+                        Video Lecture
+                    </a>
+                  
+                 
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+    <!--  Footer  -->
+    <footer>
+        <span>
+      <div class="social-icons">
+        <a href="https://github.com/priyanshu-p7"><i class="fab fa-github"></i></a>
+        <!-- <a href="#"><i class="fab fa-instagram"></i></a> -->
+        <a href="mailto:priyanshukumar94460@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/priyanahu-kumar-prasad-7836892a7/"><i class="fab fa-linkedin"></i></a>
+    </div>
+    </span>
+      <p>&copy; 2024 ScholarSpace. All rights reserved.</p>
+    <script src="feed.js"></script>
+    </footer>
+</body>
+</html>

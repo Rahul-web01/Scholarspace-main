@@ -1,0 +1,480 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(-45deg, #0f2e72, #1b2e5b, #0a0f1a,#102450);
+    /* background: linear-gradient(-45deg, #ec663dfa, #ce3045, #167ca1, #15ac88); */
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    10% { background-position: 100% 50%; }
+    20% { background-position: 0% 50%; }
+    35% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    60% { background-position: 0% 50%; }
+    70% { background-position: 0% 50%; }
+    80% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+  
+  /* Header Styles */
+  header {
+    background: linear-gradient(135deg, #1a237e, #0d47a1);
+    padding: 20px 10%;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  header .logo {
+    /* Remove color: #fff; */
+    background-image: linear-gradient(to right, #fefefe, #eddec2, #dbc297);
+    /* background: url(background.jpg) no-repeat center center/cover; */
+    -webkit-background-clip: text; /* Safari/Chrome support */
+    background-clip: text;
+    color: transparent; /* Text ko transparent rakho gradient dikhne ke liye */
+    font-size: 2rem;
+    font-weight: bold;
+    display: inline-block; /* Important for gradient effect */
+    margin-left: -100px;
+  }
+  
+  header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin-right: -120px;
+  }
+  
+  header nav ul li {
+    margin: 0;
+  }
+  
+  header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  header nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+  
+    transform: translateY(-2px);
+  }
+  
+  /* Hamburger Menu Styles */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+  }
+  
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+  }
+  
+  .mobile-nav {
+    display: none;
+    flex-direction: column;
+    background-color: #0056b3;
+    position: absolute;
+    top: 60px;
+    right: 10%;
+    width: 80%;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    overflow: hidden;
+  }
+  
+  .mobile-nav ul {
+    flex-direction: column;
+    list-style: none;
+    margin: 0;
+    padding: 10px 0;
+  }
+  
+  .mobile-nav ul li {
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  .mobile-nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 8px 0;
+  }
+  
+  .mobile-nav ul li a:hover {
+    background-color: #0066ff;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 808px) {
+    header nav {
+      display: none;
+    }
+  
+    .hamburger {
+      display: flex;
+    }
+  
+    .mobile-nav.show {
+      display: flex;
+    }
+  }
+  .content h3 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-top: 200px;
+    color: #4f9eff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+
+  .content ul {
+    list-style: none;
+    padding: 0;
+    width: 80%;
+    max-width: 700px;
+    margin: 30px auto;
+  }
+
+  .content li {
+    font-size: 1.2rem;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .content li:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+  }
+
+  .content li:hover:before {
+    left: 50%;
+  }
+
+  .content li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(79, 158, 255, 0.5);
+  }
+
+  .content a {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  .content a:hover {
+    color: #4f9eff;
+  }
+
+  /* Footer Styling */
+  footer {
+    margin-top: 100px;
+    font-size: 1rem;
+    color: #aaa;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  footer p {
+    margin: 10px 0;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+    }
+
+    ul {
+      width: 95%;
+    }
+
+    li {
+      font-size: 1.1rem;
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 2rem;
+    }
+
+    li {
+      font-size: 1rem;
+      padding: 12px;
+    }
+  }
+  
+  /* Footer Styles */
+  footer {
+    margin-top: 300px;
+    background: linear-gradient(135deg, #0c1036, #1a237e, #0d47a1, #0f5aca);
+    /* background-image: url(study.png); */
+    color: #ffffff;
+    text-align: center;
+    padding: 15px 0;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive Design for header */
+  @media (max-width: 808px) {
+    header .logo {
+      font-size: 2.0rem;
+      margin-left: -5px;
+    }
+    header {
+      padding: 10px 5%;
+    }
+  
+    header nav ul {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+
+
+  
+  }
+  
+  @media (max-width: 480px) {
+    header .logo {
+      font-size: 1.5rem;
+      margin-left: -5px;
+    }
+  
+    header nav ul {
+      gap: 5px;
+    }
+  
+    .hero h1 {
+      font-size: 2rem;
+    }
+  
+    .hero p {
+      font-size: 1rem;
+    }
+  
+    button {
+      padding: 8px 15px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Improved Mobile Menu */
+  .mobile-nav {
+    display: none;
+    background: #0056b3 /* Changed to white background */
+    /* box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .mobile-nav ul li a {
+    color: #fff !important; /* Blue color for links */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px !important;
+  }
+  
+  /* Icon Styles */
+  .nav-icon {
+    font-size: 1.2rem;
+    width: 25px;
+  }
+  
+  
+  /* Footer Enhancements */
+  footer {
+    margin-top: 500px;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .social-icons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    transform: scale(1.2);
+  }
+  
+  
+  #bgText{
+    position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 6vw;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            user-select: none;
+            white-space: nowrap;
+            transition: all 0.5s ease;
+            z-index: -1;
+  }
+
+  /* Feedback Form */
+  .feedback-section {
+    color: #0056b3;
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.feedback-form input,
+.feedback-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+.submit-btn {
+    background: #0d47a1;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+
+
+
+
+/* टैब स्टाइलिंग */
+.tab-buttons {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.tab-btn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.tab-btn.active {
+  background: #007bff;
+  color: white;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.notes-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #28a745;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 10px;
+}
+

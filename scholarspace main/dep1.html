@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="icon" href="letter-s (1).png"> -->
+    <link rel="shortcut icon" href="letter-s (1).png" type="image/x-icon">
+    <title>ScholarSpace</title>
+
+    <!-- Add Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="uni1.css">
+  </head>
+
+  <body>
+    <!-- Header with Icons -->
+    <header>
+        <a href="index.html" class="logo-link">
+            <div class="logo">
+              <i class="fas fa-graduation-cap"></i> 
+              ScholarSpace
+            </div>
+          </a>      <nav>
+        <ul class="cont">
+          <li><a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a></li>
+          <li><a href="uni1.html"><i class="fas fa-book-open nav-icon"></i> Explore Notes</a></li>
+          <li><a href="sgpa/index.html"><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a></li>
+          <li><a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a></li>
+          <li><a href="about.html"><i class="fas fa-info-circle nav-icon"></i> About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Hamburger Icon -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="mobile-nav" id="mobileMenu">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a></li>
+            <li><a href="uni1.html"><i class="fas fa-book-open nav-icon"></i> Explore Notes</a></li>
+            <li><a href="sgpa/index.html"><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a></li>
+            <li><a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle nav-icon"></i> About Us</a></li>
+        </ul>
+    </div>
+    </header>
+<div class="content" id="uniname" >
+    <h3> select your department </h3>
+    <ul>
+        <li><a href="year1.html"> School Of Engineering / B.Tech </a></li>
+        <li><a onclick="alert('will be uploaded soon!')"> School Of Pharmacy </a></li>
+        <li><a onclick="alert('will be uploaded soon!')"> School Of Management </a></li>
+        <li><a onclick="alert('will be uploaded soon!')"> School Of Computer Applications </a></li>
+    </ul>
+</div>
+
+<div  id="bgText">
+    <i class="fas fa-graduation-cap"></i> 
+    SCHOLARSPACE
+</div>
+    <!-- Enhanced Footer -->
+    <footer>
+        <span></span>
+      <div class="social-icons">
+        <a href="https://github.com/priyanshu-p7"><i class="fab fa-github"></i></a>
+        <!-- <a href="#"><i class="fab fa-instagram"></i></a> -->
+        <a href="mailto:priyanshukumar94460@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/priyanahu-kumar-prasad-7836892a7/"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </span>
+      <p>&copy; 2024 ScholarSpace. All rights reserved.</p>
+    
+    </footer>
+    <script src="feed.js"></script>
+     <script>
+        window.addEventListener('scroll', () => {
+            const scrollPercentage = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const rotation = scrollPercentage * 360;
+            const scale = 1 + scrollPercentage * 0.2;
+            const bgText = document.getElementById('bgText');
+            bgText.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`;
+        });
+     </script>
+  </body>
+</html>

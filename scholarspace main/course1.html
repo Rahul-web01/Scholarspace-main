@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Resource Hub</title>
+    <link rel="shortcut icon" href="letter-s (1).png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+   <link rel="stylesheet" href="course1.css">
+</head>
+<body>
+    <!-- Your Header Here --><header>
+        <a href="index.html" class="logo-link">
+            <div class="logo">
+              <i class="fas fa-graduation-cap"></i> 
+              ScholarSpace
+            </div>
+          </a>      <nav>
+        <ul class="cont">
+          <li><a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a></li>
+          <li><a href="uni1.html"><i class="fas fa-book-open nav-icon"></i> Explore Notes</a></li>
+          <li><a href="sgpa/index.html"><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a></li>
+          <li><a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a></li>
+          <li><a href="about.html"><i class="fas fa-info-circle nav-icon"></i> About Us</a></li>
+        </ul>
+      </nav>
+      <!-- Hamburger Icon -->
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="mobile-nav" id="mobileMenu">
+        <ul>
+            <li><a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a></li>
+            <li><a href="uni1.html"><i class="fas fa-book-open nav-icon"></i> Explore Notes</a></li>
+            <li><a href="sgpa/index.html"><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a></li>
+            <li><a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle nav-icon"></i> About Us</a></li>
+        </ul>
+    </div>
+    </header>
+ 
+    <div class="container">
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://media.geeksforgeeks.org/img-practice/prod/courses/198/Mobile/Content/dsa_1723009331.png" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Data Structure & Algorithms</h3>
+                <p>Master complex algorithms...</p>
+                <div class="btn-group"> 
+                    <a href="https://www.geeksforgeeks.org/dsa-tutorial-learn-data-structures-and-algorithms/" class="card-btn">
+                        <i class="fas fa-rocket"></i>
+                        Start Course
+                    </a>
+                
+                    <a href="https://youtube.com/playlist?list=PLDzeHZWIZsTryvtXdMr6rPh4IDexB5NIA&si=-q6wbDYl2zAI3qEM" class="card-btn watch-btn">
+                        <i class="fas fa-video"></i>
+                        Video Lecture
+                    </a>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn57PG8CzHSUSOfLmXdMqzAcfksPVedwimQw&s" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>C Programming</h3>
+                <p>Master complex algorithms...</p>
+                <div class="btn-group"> 
+                    <a href="https://www.w3schools.com/c/" class="card-btn">
+                        <i class="fas fa-rocket"></i>
+                        Start Course
+                    </a>
+                
+                    <a href="https://youtube.com/playlist?list=PLxgZQoSe9cg1drBnejUaDD9GEJBGQ5hMt&si=1IjWuMZEY2eEpOog" class="card-btn watch-btn">
+                        <i class="fas fa-video"></i>
+                        Video Lecture
+                    </a>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzMq96xcwCQeih52ptzFpf-DGhpBNQH2SvDA&s" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>C++ Programming</h3>
+                <p>Master complex algorithms...</p>
+                <div class="btn-group"> 
+                    <a href="#" class="card-btn">
+                        <i class="fas fa-rocket"></i>
+                        Start Course
+                    </a>
+                
+                    <a href="#" class="card-btn watch-btn">
+                        <i class="fas fa-video"></i>
+                        Video Lecture
+                    </a>
+                  
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-img-container">
+                <img src="back.jpg" 
+                     class="card-img" 
+                     alt="Algorithms Course">
+            </div>
+            <div class="card-content">
+                <h3>Advanced Algorithms</h3>
+                <p>Master complex algorithms...</p>
+                <div class="btn-group"> 
+                    <a href="#" class="card-btn">
+                        <i class="fas fa-rocket"></i>
+                        Start Course
+                    </a>
+                
+                    <a href="#" class="card-btn watch-btn">
+                        <i class="fas fa-video"></i>
+                        Video Lecture
+                    </a>
+                  
+                </div>
+            </div>
+        </div>
+
+     
+    
+
+    </div>
+
+    <!--  Footer  -->
+    <footer>
+        <span>
+      <div class="social-icons">
+        <a href="https://github.com/priyanshu-p7"><i class="fab fa-github"></i></a>
+        <!-- <a href="#"><i class="fab fa-instagram"></i></a> -->
+        <a href="mailto:priyanshukumar94460@gmail.com"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/priyanahu-kumar-prasad-7836892a7/"><i class="fab fa-linkedin"></i></a>
+    </div>
+    </span>
+      <p>&copy; 2024 ScholarSpace. All rights reserved.</p>
+    <script src="feed.js"></script>
+    </footer>
+</body>
+</html>
