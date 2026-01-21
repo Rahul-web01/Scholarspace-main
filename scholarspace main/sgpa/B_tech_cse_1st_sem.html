@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SGPA Calculator</title>
+    <link rel="stylesheet" href="sgpa.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>SGPA Calculator</h1>
+      <h5>for B.Tech CSE (1st semester)</h5>
+      <form id="sgpaForm">
+        <div class="subject">
+          <label>Matrices And Calculas (NBS4101):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub1External" required />
+            <input type="number" placeholder="Internal Marks" id="sub1Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Computer Concept And Programming in C (NCS4101):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub2External" required />
+            <input type="number" placeholder="Internal Marks" id="sub2Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Enginnering Physics (NBS4102):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub3External" required />
+            <input type="number" placeholder="Internal Marks" id="sub3Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Engineering Mechanics (NME4101):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub4External" required />
+            <input type="number" placeholder="Internal Marks" id="sub4Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Basic Electronics Engineering (NEC4101):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub5External" required />
+            <input type="number" placeholder="Internal Marks" id="sub5Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Environmental Studies (NBSCC1101):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub6External" required />
+            <input type="number" placeholder="Internal Marks" id="sub6Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Computer Concept And Programming in C (NCS4151):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub7External" required />
+            <input type="number" placeholder="Internal Marks" id="sub7Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Engineering Mechanics (NME4151):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub8External" required />
+            <input type="number" placeholder="Internal Marks" id="sub8Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Workshop Lab (NME4152):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub9External" required />
+            <input type="number" placeholder="Internal Marks" id="sub9Internal" required />
+          </div>
+        </div>
+
+        <div class="subject">
+          <label>Engineering Physics Lab (NBS4152):</label>
+          <div>
+            <input type="number" placeholder="External Marks" id="sub10External" required />
+            <input type="number" placeholder="Internal Marks" id="sub10Internal" required />
+          </div>
+        </div>
+
+        <div class="gp-container">
+          <label>General Proficiency:</label>
+          <input type="number" placeholder="Enter GP Marks" id="gpMarks" required />
+        </div>
+
+        <button type="button" onclick="calculateSGPA()">Calculate SGPA</button>
+      </form>
+
+      <div id="result" class="result"></div>
+      <div id="additionalInfo" class="additional-info"></div>
+    </div>
+
+    <script src="1stsem.js"></script>
+  </body>
+</html>
