@@ -302,7 +302,6 @@
             max-width: 380px;
             border-radius: 25px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            transform: rotate(-3deg);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -313,7 +312,7 @@
         }
 
         .profile-pic:hover {
-            transform: rotate(0deg) translateY(-10px);
+            transform: rotate(-3deg) translateY(-10px);
         }
 
         .about h2 {
