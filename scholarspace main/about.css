@@ -293,7 +293,7 @@
             padding: 6rem 8%;
             align-items: center;
             background: linear-gradient(45deg, 
-                rgba(42,42,114,0.03) 0%, 
+                rgba(37, 37, 134, 0.03) 0%, 
                 rgba(0,159,253,0.015) 100%);
         }
 
@@ -312,7 +312,7 @@
         }
 
         .profile-pic:hover {
-            transform: rotate(-3deg) translateY(-10px);
+            transform: rotate(+3deg) translateY(-10px);
         }
 
         .about h2 {
