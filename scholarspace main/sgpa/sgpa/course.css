@@ -1,0 +1,134 @@
+/* General Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #0a0f1a;
+    color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 3rem;
+    margin-top: 40px;
+    color: #4f9eff;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    width: 80%;
+    max-width: 700px;
+    margin: 30px auto;
+  }
+
+  li {
+    font-size: 1.4rem;
+    background: #1c2630;
+    color: #ffffff;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  li:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(79, 158, 255, 0.2), rgba(10, 18, 30, 0.1));
+    transform: skewX(-20deg);
+    transition: left 0.5s ease;
+  }
+
+  li:hover:before {
+    left: 50%;
+  }
+
+  li:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(79, 158, 255, 0.5);
+  }
+
+  a {
+    text-decoration: none;
+    color: #f5f5f5;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  a:hover {
+    color: #4f9eff;
+  }
+
+  /* Footer Styling */
+  footer {
+    margin-top: 100px;
+    font-size: 1rem;
+    color: #aaa;
+    animation: fadeIn 2s ease-in-out;
+  }
+
+  footer p {
+    margin: 10px 0;
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Styling */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 2.5rem;
+    }
+
+    ul {
+      width: 95%;
+    }
+
+    li {
+      font-size: 1.1rem;
+      padding: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 2rem;
+    }
+
+    li {
+      font-size: 1rem;
+      padding: 12px;
+    }
+  }
