@@ -1,3 +1,4 @@
 function redirectToSGPACalculator() {
-    window.location.href = "selectcourse.html"; // Replace with your SGPA calculator page URL
-  }
+    // This redirects the user to the Course Selection page
+    window.location.href = "selectcourse.html";
+}
