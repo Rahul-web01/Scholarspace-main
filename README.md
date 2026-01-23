@@ -81,6 +81,5 @@ Contributions are always welcome! If you have suggestions or want to improve thi
 
 **Rahul Singh** - GitHub: [@Rahul-web01](https://github.com/Rahul-web01)
 - Email: contact.rahul82@gmail.com
-- LinkedIn: [Your LinkedIn Profile Link Here]
-
+- LinkedIn: https://www.linkedin.com/in/rahul-singh-cse/
 Project Link: [https://github.com/Rahul-web01/Scholarspace-main](https://github.com/Rahul-web01/Scholarspace-main)
