@@ -4,18 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Semester (AI)</title>
-    <link rel="stylesheet" href="style.css"> 
     <style>
-        body { text-align: center; background-color: #0a0f1a; color: white; padding: 50px; font-family: sans-serif; }
-        h2 { color: #4f9eff; }
-        .btn { display: block; width: 200px; padding: 15px; margin: 20px auto; background: #1c2533; color: white; text-decoration: none; border-radius: 8px; border: 1px solid #4f9eff; transition: 0.3s; }
-        .btn:hover { background: #4f9eff; color: white; }
+        /* General Page Setup */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0f1a; /* Dark Navy Background */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Full screen height */
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            color: #4f9eff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* The Container for the two cards */
+        .container {
+            display: flex;
+            gap: 30px; /* Space between cards */
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* The Attractive Cards */
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 250px;
+            height: 300px;
+            background: linear-gradient(145deg, #1c2533, #161d29); /* Subtle 3D gradient */
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px #05080e, -10px -10px 20px #232e40; /* Neumorphism shadow */
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Text inside the card */
+        .card h3 {
+            font-size: 24px;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .card p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* Hover Effects (The Magic) */
+        .card:hover {
+            transform: translateY(-10px); /* Moves up */
+            box-shadow: 0 0 25px rgba(79, 158, 255, 0.6); /* Blue Glow */
+            border-color: #4f9eff;
+        }
+
+        /* Specific Colors for variety */
+        .odd:hover h3 { color: #4f9eff; } /* Blue for Odd */
+        .even:hover h3 { color: #ff4fcf; } /* Pink for Even */
+        .even:hover { box-shadow: 0 0 25px rgba(255, 79, 207, 0.6); border-color: #ff4fcf;}
+
+        .back-link {
+            margin-top: 50px;
+            color: #666;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .back-link:hover { color: white; }
+
     </style>
 </head>
 <body>
-    <h2>Select Your Semester (AI)</h2>
-    <a href="cse.html" class="btn">Semester 1</a>
-    <a href="cse.html" class="btn">Semester 2</a>
-    <a href="index.html" style="color: #888; margin-top: 20px; display: inline-block;">Back to Home</a>
+
+    <h2>Choose Semester Type</h2>
+
+    <div class="container">
+        <a href="cse.html" class="card odd">
+            <h1>1, 3, 5, 7</h1>
+            <h3>Odd Semesters</h3>
+            <p>Click to Calculate</p>
+        </a>
+
+        <a href="cse.html" class="card even">
+            <h1>2, 4, 6, 8</h1>
+            <h3>Even Semesters</h3>
+            <p>Click to Calculate</p>
+        </a>
+    </div>
+
+    <a href="selectcourse.html" class="back-link">← Back to Courses</a>
+
 </body>
 </html>
