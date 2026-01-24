@@ -5,75 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSE SGPA Calculator</title>
     <style>
-        /* Simple Dark Theme */
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #0a0f1a;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 50px;
-        }
-        .subject-row {
-            background: #1a1f2e;
-            padding: 15px;
-            margin: 10px;
-            border-radius: 10px;
-            display: flex;
-            gap: 10px;
-        }
-        input, select { padding: 10px; border-radius: 5px; border: none; }
-        button {
-            padding: 15px 40px;
-            background: #4f9eff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        #result { margin-top: 20px; font-size: 24px; color: #4f9eff; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background: #0a0f1a; color: white; text-align: center; padding: 20px; }
+        h2 { color: #4f9eff; margin-bottom: 30px; }
+        .subject-row { margin: 15px auto; display: flex; justify-content: center; gap: 10px; }
+        input, select { padding: 12px; border-radius: 5px; border: none; outline: none; text-align: center; }
+        input { width: 100px; background: #1c2533; color: white; }
+        select { width: 120px; background: #1c2533; color: white; cursor: pointer; }
+        button { padding: 12px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 20px 10px; transition: 0.3s; }
+        .btn-calc { background: #4f9eff; color: white; }
+        .btn-calc:hover { background: #3b7dcc; }
+        .btn-reset { background: #ff4f4f; color: white; }
+        .btn-reset:hover { background: #cc3b3b; }
+        #result { font-size: 28px; color: #4f9eff; margin-top: 30px; font-weight: bold; min-height: 40px; }
     </style>
 </head>
 <body>
 
-    <h2>Enter Your Grades (CSE)</h2>
-
+    <h2>CSE SGPA Calculator</h2>
+    
     <div id="calculator-container">
         <div class="subject-row">
-            <input type="number" class="credit" placeholder="Credit (e.g. 4)">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
             <select class="grade">
-                <option value="10">O</option> <option value="9">A+</option>
-                <option value="8">A</option> <option value="7">B+</option>
-                <option value="6">B</option> <option value="5">C</option>
-                <option value="4">P</option> <option value="0">F</option>
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
             </select>
         </div>
         <div class="subject-row">
-            <input type="number" class="credit" placeholder="Credit">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
             <select class="grade">
-                <option value="10">O</option> <option value="9">A+</option>
-                <option value="8">A</option> <option value="7">B+</option>
-                <option value="6">B</option> <option value="5">C</option>
-                <option value="4">P</option> <option value="0">F</option>
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
             </select>
         </div>
         <div class="subject-row">
-            <input type="number" class="credit" placeholder="Credit">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
             <select class="grade">
-                <option value="10">O</option> <option value="9">A+</option>
-                <option value="8">A</option> <option value="7">B+</option>
-                <option value="6">B</option> <option value="5">C</option>
-                <option value="4">P</option> <option value="0">F</option>
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
+            <select class="grade">
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
+            <select class="grade">
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
+            <select class="grade">
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
+            <select class="grade">
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credits" min="1" max="5">
+            <select class="grade">
+                <option value="10">O</option><option value="9">A+</option><option value="8">A</option>
+                <option value="7">B+</option><option value="6">B</option><option value="5">C</option><option value="0">F</option>
             </select>
         </div>
     </div>
 
-    <button onclick="calculateSGPA()">Calculate Result</button>
-    <div id="result"></div>
+    <br>
+    <button class="btn-calc" onclick="calculateSGPA()">Calculate SGPA</button>
+    <button class="btn-reset" onclick="location.reload()">Reset</button>
 
+    <div id="result"></div>
+    
     <script src="script.js"></script>
+
 </body>
 </html>
