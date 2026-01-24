@@ -1,36 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SGPA Calculator</title>
-    <link rel="stylesheet" href="course.css">
-    
-  </head>
-  <body>
-    <!-- Explore Notes Section -->
-    <h2>Select Semester</h2>
-    <ul>
-      <li>
-        <a href="B_tech_cse_1st_sem.html">1st semester</a>
-      </li>
-      <li>
-        <a href="B_tech_cse_2nd_sem.html">2nd semester</a>
-      </li>
-      <li>
-        <a href="B_tech_cse_3rd_sem.html">3rd semester</a>
-      </li>
-      <li>
-        <a href="B_tech_cse_4th_sem.html">4th semester</a>
-      </li>
-      
-      
-      
-    </ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSE SGPA Calculator</title>
+    <style>
+        /* Simple Dark Theme */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0f1a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+        .subject-row {
+            background: #1a1f2e;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        input, select { padding: 10px; border-radius: 5px; border: none; }
+        button {
+            padding: 15px 40px;
+            background: #4f9eff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        #result { margin-top: 20px; font-size: 24px; color: #4f9eff; font-weight: bold; }
+    </style>
+</head>
+<body>
 
-    <!-- Footer Section -->
-    <footer>
-      <p>&copy; 2024 ScholarSpace. All rights reserved.</p>
-    </footer>
-  </body>
+    <h2>Enter Your Grades (CSE)</h2>
+
+    <div id="calculator-container">
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credit (e.g. 4)">
+            <select class="grade">
+                <option value="10">O</option> <option value="9">A+</option>
+                <option value="8">A</option> <option value="7">B+</option>
+                <option value="6">B</option> <option value="5">C</option>
+                <option value="4">P</option> <option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credit">
+            <select class="grade">
+                <option value="10">O</option> <option value="9">A+</option>
+                <option value="8">A</option> <option value="7">B+</option>
+                <option value="6">B</option> <option value="5">C</option>
+                <option value="4">P</option> <option value="0">F</option>
+            </select>
+        </div>
+        <div class="subject-row">
+            <input type="number" class="credit" placeholder="Credit">
+            <select class="grade">
+                <option value="10">O</option> <option value="9">A+</option>
+                <option value="8">A</option> <option value="7">B+</option>
+                <option value="6">B</option> <option value="5">C</option>
+                <option value="4">P</option> <option value="0">F</option>
+            </select>
+        </div>
+    </div>
+
+    <button onclick="calculateSGPA()">Calculate Result</button>
+    <div id="result"></div>
+
+    <script src="script.js"></script>
+</body>
 </html>
