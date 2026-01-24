@@ -60,8 +60,9 @@ You only need a web browser (Chrome, Edge, Firefox) and a code editor (VS Code).
 
 ## 📸 Screenshots
 
-![App Screenshot](https://via.placeholder.com/800x400?text=Upload+Your+Screenshot+Here)
-*(Tip: Replace the link above with a screenshot of your actual website)*
+<div align="center"> 
+  <img width="1893" height="906" alt="Image" src="https://github.com/user-attachments/assets/8af7e954-6815-4f80-9b7e-0c1c2e4f80aa" />
+</div>
 
 ---
 
