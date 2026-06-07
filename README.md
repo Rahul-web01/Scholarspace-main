@@ -119,6 +119,6 @@ Contributions make the open-source community an amazing place to learn, inspire,
 **Rahul Singh** *Full Stack Developer & Computer Science Student*
 
 <p align="left">
-<a href="https://www.linkedin.com/in/rahul-singh-cse/" target="blank"><img align="center" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Rahul Singh" /></a>
+<a href="www.linkedin.com/in/rahul-singh-cs/" target="blank"><img align="center" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Rahul Singh" /></a>
 <a href="mailto:contact.rahul82@gmail.com" target="blank"><img align="center" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="contact.rahul82@gmail.com" /></a>
 <a href="https://github.com/Rahul-web01" target="blank"><img align="center" src="
