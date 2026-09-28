@@ -55,9 +55,10 @@ This project focuses on **accessibility**, **user experience (UX)**, and **effic
 
 ## 🛠️ Technical Architecture
 
-* **Frontend:** HTML5, CSS3 (Custom Animations & Glassmorphism), Vanilla JavaScript (ES6+).
-* **Version Control:** Git & GitHub (Branch management, Pull Requests).
-* **Design Philosophy:** Mobile-First approach with focus on Accessibility (a11y).
+   * Backend: Java, Spring Boot, Spring Data JPA, REST APIs
+   * Database: MySQL (3NF schema, indexed queries)
+   * Security: Role-based access control (Admin / Faculty / Student)
+   * Frontend: HTML5, CSS3, JavaScript (ES6+)
 
 ---
 
