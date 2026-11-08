@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contribute & Feedback | ScholarSpace</title>
+  <meta name="description" content="Share notes with ScholarSpace, report a broken link or send feedback.">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:title" content="Contribute & Feedback | ScholarSpace">
+  <meta property="og:description" content="Share notes with ScholarSpace, report a broken link or send feedback.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>try{var t=localStorage.getItem("ss-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body data-page="feedback">
+<main id="main">
+  <section class="page-head"><div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span aria-current="page">Contribute & Feedback</span></nav>
+    <h1>Contribute & feedback</h1>
+    <p class="lead">Share notes, report a broken link, request a subject or just tell us what you think.</p>
+  </div></section>
+  <section style="padding-top:12px"><div class="container" style="max-width:760px">
+    <form class="form-card" id="feedback-form">
+      <div class="form-grid">
+        <div class="field"><label for="name">Your name</label><input class="input" id="name" name="name" required autocomplete="name"></div>
+        <div class="field"><label for="course">Course & year <span class="muted">(optional)</span></label><input class="input" id="course" name="course" placeholder="e.g. B.Tech CSE, 2nd Year"></div>
+      </div>
+      <div class="field"><label for="topic">What is it about?</label>
+        <select class="input" id="topic" name="topic">
+          <option value="contribute">I want to share notes</option>
+          <option value="request">Request a subject or paper</option>
+          <option value="broken">Report a broken link</option>
+          <option value="feedback">General feedback</option>
+        </select></div>
+      <div class="field"><label for="message">Message</label><textarea class="input" id="message" name="message" required placeholder="Tell us the subject, unit and anything else useful. For notes, you can attach the files in the email that opens."></textarea></div>
+      <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane"></i>Continue in email</button>
+      <div class="note" id="sent" hidden style="margin-top:16px"><i class="fa-solid fa-circle-info"></i><span>Your email app should open with the message filled in. If nothing happens, write to <a href="mailto:contact.rahul82@gmail.com">contact.rahul82@gmail.com</a>.</span></div>
+    </form>
+  </div></section>
+</main>
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

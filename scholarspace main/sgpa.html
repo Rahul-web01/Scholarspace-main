@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SGPA Calculator | ScholarSpace</title>
+  <meta name="description" content="Calculate your SGPA and percentage on the 10-point grading scale used by BBD University.">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:title" content="SGPA Calculator | ScholarSpace">
+  <meta property="og:description" content="Calculate your SGPA and percentage on the 10-point grading scale used by BBD University.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>try{var t=localStorage.getItem("ss-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body data-page="sgpa">
+<main id="main">
+  <section class="page-head"><div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span aria-current="page">SGPA Calculator</span></nav>
+    <h1>SGPA Calculator</h1>
+    <p class="lead">Enter the credits and total marks (out of 100) for each subject, including labs and general proficiency. Your SGPA updates as you type.</p>
+  </div></section>
+  <section style="padding-top:12px"><div class="container sgpa-layout">
+    <div class="form-card">
+      <table class="sgpa-table">
+        <thead><tr><th>Subject</th><th>Credits</th><th>Marks</th><th style="text-align:center">Grade</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+        <button class="btn btn-primary" id="add-row" type="button"><i class="fa-solid fa-plus"></i>Add subject</button>
+        <button class="btn btn-ghost" id="reset" type="button"><i class="fa-solid fa-rotate-left"></i>Reset</button>
+      </div>
+    </div>
+    <aside class="form-card result-card" aria-live="polite">
+      <div class="muted" style="font-weight:600">Your SGPA</div>
+      <div class="big" id="sgpa">0.00</div>
+      <p class="muted" id="status" style="font-size:.9rem">Enter credits and marks to see your SGPA.</p>
+      <div class="kv"><span>Subjects</span><b id="subjects">0</b></div>
+      <div class="kv"><span>Total credits</span><b id="credits">0</b></div>
+      <div class="kv"><span>Average marks</span><b id="percent">–</b></div>
+      <details style="text-align:left;margin-top:12px"><summary style="cursor:pointer;font-weight:600">Grading scale</summary><table class="scale" id="scale"></table>
+        <p class="muted" style="font-size:.82rem;margin-top:10px">SGPA = Σ(grade points × credits) ÷ Σ credits. Check your university ordinance for the final rules.</p></details>
+    </aside>
+  </div></section>
+</main>
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,193 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rahul Singh| ScholarSpace</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
-    <link rel="stylesheet" href="about.css" />
-    <link rel="shortcut icon" href="letter-s (1).png" type="image/x-icon" />
-  </head>
-  <body>
-    <!-- Your Header Here -->
-
-    <!-- Header with Icons -->
-    <header>
-      <a href="index.html" class="logo-link">
-        <div class="logo">
-          <i class="fas fa-graduation-cap"></i>
-          ScholarSpace
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | ScholarSpace</title>
+  <meta name="description" content="ScholarSpace is a free academic resource hub built by Rahul Singh, a B.Tech CSE student at BBD University.">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:title" content="About | ScholarSpace">
+  <meta property="og:description" content="ScholarSpace is a free academic resource hub built by Rahul Singh, a B.Tech CSE student at BBD University.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>try{var t=localStorage.getItem("ss-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body data-page="about">
+<main id="main">
+  <section class="page-head"><div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span aria-current="page">About</span></nav>
+  </div></section>
+  <section style="padding-top:8px"><div class="container">
+    <div class="form-card profile">
+      <img src="assets/img/rahul.jpg" alt="Rahul Singh" width="200" height="200">
+      <div>
+        <span class="badge" style="margin-bottom:12px"><i class="fa-solid fa-code"></i>Backend Developer · B.Tech CSE, BBD University</span>
+        <h1 style="font-size:clamp(1.8rem,3.5vw,2.6rem)">Hi, I’m Rahul Singh</h1>
+        <p class="muted" style="font-size:1.05rem">I’m a backend developer who enjoys building APIs and working with data. I built <strong style="color:var(--text)">ScholarSpace</strong> because study material at university is scattered across WhatsApp groups and private drives. ScholarSpace puts it in one place, organised by year and subject, free for everyone.</p>
+        <div class="subject-actions">
+          <a class="btn btn-primary" href="https://www.linkedin.com/in/rahul-singh-cs/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in"></i>LinkedIn</a>
+          <a class="btn btn-ghost" href="https://github.com/Rahul-web01" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i>GitHub</a>
+          <a class="btn btn-ghost" href="mailto:contact.rahul82@gmail.com"><i class="fa-solid fa-envelope"></i>Email</a>
         </div>
-      </a>
-      <nav>
-        <ul class="cont">
-          <li>
-            <a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a>
-          </li>
-          <li>
-            <a href="uni1.html"
-              ><i class="fas fa-book-open nav-icon"></i> Explore Notes</a
-            >
-          </li>
-          <li>
-            <a href="sgpa/index.html"
-              ><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a
-            >
-          </li>
-          <li>
-            <a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a>
-          </li>
-          <li>
-            <a href="about.html"
-              ><i class="fas fa-info-circle nav-icon"></i> About Us</a
-            >
-          </li>
-        </ul>
-      </nav>
-      <!-- Hamburger Icon -->
-      <div class="hamburger" onclick="toggleMenu()">
-        <div></div>
-        <div></div>
-        <div></div>
       </div>
-      <div class="mobile-nav" id="mobileMenu">
-        <ul>
-          <li>
-            <a href="index.html"><i class="fas fa-home nav-icon"></i> Home</a>
-          </li>
-          <li>
-            <a href="uni1.html"
-              ><i class="fas fa-book-open nav-icon"></i> Explore Notes</a
-            >
-          </li>
-          <li>
-            <a href="sgpa/index.html"
-              ><i class="fas fa-calculator nav-icon"></i> Calculate SGPA</a
-            >
-          </li>
-          <li>
-            <a href="feedback1.html"><i class="fas fa-edit"></i> Feedback </a>
-          </li>
-          <li>
-            <a href="about.html"
-              ><i class="fas fa-info-circle nav-icon"></i> About Us</a
-            >
-          </li>
-        </ul>
-      </div>
-    </header>
+    </div>
+  </div></section>
 
-    <main>
-      <section class="about">
-        <img src="subject/photo.jpg" alt="Rahul" class="profile-pic" />
-        <div>
-          <h2>Hi, I'm Rahul!</h2>
-          <p class="bio">
-             A Backend Developer with a passion for API development and database management.
-             Currently pursuing my B.Tech in CSE at BBD University, I built the infrastructure for
-             <strong class="gradient-text">ScholarSpace</strong>, a centralized academic platform.
-             I focus on writing efficient logic, securing data transactions, and building seamless
-             integrations to enhance the user experience.
-          </p>
-          <ul class="highlights">
-            <li>📚 Managed centralized database for study materials</li>
-            <li>🤝 Access Previous Year Question Paper</li>
-            <li>🎯 Developed accurate algorithms for SGPA calculation</li>
-            <li>🚀 Explore Video Lectures and Practice set</li>
-          </ul>
-        </div>
-      </section>
+  <section class="section"><div class="container">
+    <div class="grid grid-3">
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-bullseye"></i></span><h3>Mission</h3><p>Make good study material free and easy to find for every student, in every course.</p></div>
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-layer-group"></i></span><h3>How it’s organised</h3><p>B.Tech CSE follows the BBD University 2026-27 syllabus year by year. Other courses are grouped by subject.</p></div>
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-hand-holding-heart"></i></span><h3>Built with students</h3><p>Notes come from students, toppers and teachers. Anyone can contribute.</p></div>
+    </div>
+  </div></section>
 
-      <section class="vision">
-        <h3>🚀 My Vision</h3>
-        <p>
-          To drive digital transformation by developing reliable, data-driven software solutions.
-          I strive to engineer systems that are not only functional but also scalable,
-          ensuring technology adapts to the evolving needs of learners and institutions alike.
-        </p>
-      </section>
+  <section class="section" style="padding-top:0"><div class="container">
+    <div class="section-head"><h2>Technical skills</h2></div>
+    <div class="grid grid-4">
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-server"></i></span><h3>Backend</h3><p>Java, Spring Boot, REST APIs, Hibernate (JPA), Microservices</p></div>
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-database"></i></span><h3>Databases</h3><p>MySQL, PostgreSQL, MongoDB, JDBC</p></div>
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-brain"></i></span><h3>Core CS</h3><p>Data Structures & Algorithms, OOP, System Design</p></div>
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-screwdriver-wrench"></i></span><h3>Tools</h3><p>Git & GitHub, Postman, VS Code, Maven</p></div>
+    </div>
+  </div></section>
 
-      <section class="skills">
-        <h3>💻 Technical Skills</h3>
-        <div class="skill-grid">
-          <div class="skill-card">
-            <h4><i class="fas fa-server"></i> Backend Engineering</h4>
-            <p>Java (Spring Boot) | RESTful APIs | Hibernate (JPA) | Microservices</p>
-          </div>
-          
-          <div class="skill-card">
-            <h4><i class="fas fa-database"></i> Database Management</h4>
-            <p>MySQL | PostgreSQL | MongoDB | JDBC</p>
-          </div>
-          
-          <div class="skill-card">
-            <h4><i class="fas fa-brain"></i> Core Concepts</h4>
-            <p>Data Structures (DSA) | OOPs | System Design | Algorithms</p>
-          </div>
-          
-          <div class="skill-card">
-            <h4><i class="fas fa-tools"></i> Tools & DevOps</h4>
-            <p>Git & GitHub | Postman | VS Code | Maven</p>
-          </div>
-
-  </div>
-</section>
-      <section class="contact">
-        <h3>📬 Let's Connect</h3>
-        <div class="contact-grid">
-          <div class="contact-card">
-            <a href="mailto:contact.rahul82@gmail.com">
-              <i class="fas fa-envelope contact-icon"></i>
-              <h4>Email</h4>
-              <p>contact.rahul82@gmail.com</p>
-            </a>
-          </div>
-
-          <div class="contact-card">
-            <a href="https://github.com/Rahul-web01" target="_blank">
-              <i class="fab fa-github contact-icon"></i>
-              <h4>GitHub</h4>
-              <p>@Rahul-web01</p>
-            </a>
-          </div>
-
-          <div class="contact-card">
-            <a
-              href="https://www.linkedin.com/in/rahul-singh-cs/"
-              target="_blank"
-            >
-              <i class="fab fa-linkedin contact-icon"></i>
-              <h4>LinkedIn</h4>
-              <p>Connect Now</p>
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Your Footer Here -->
-
-    <footer>
-      <span>
-        <div class="social-icons">
-          <a href="https://github.com/Rahul-web01"
-            ><i class="fab fa-github"></i
-          ></a>
-          <!-- <a href="mailto:contact.rahul82@gmail.com"><i class="fab fa-instagram"></i></a> -->
-          <a href="mailto:contact.rahul82@gmail.com"
-            ><i class="fas fa-envelope"></i
-          ></a>
-          <a
-            href="https://www.linkedin.com/in/rahul-singh-cs/"
-            ><i class="fab fa-linkedin"></i
-          ></a>
-        </div>
-      </span>
-      <p>&copy; 2024 ScholarSpace. All rights reserved.</p>
-    </footer>
-    <script src="feed.js"></script>
-  </body>
+  <section class="section" style="padding-top:0"><div class="container">
+    <div class="section-head"><h2>What ScholarSpace offers</h2></div>
+    <div class="form-card"><ul class="list-check">
+      <li><i class="fa-solid fa-circle-check"></i><span>One searchable library of notes, previous year papers, practice sets and books.</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span>Year-wise subjects for B.Tech CSE, matched to the current syllabus.</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span>Material for other branches, B.Pharm and Agriculture.</span></li>
+      <li><i class="fa-solid fa-circle-check"></i><span>An SGPA calculator on the 10-point grading scale.</span></li>
+    </ul></div>
+  </div></section>
+</main>
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
 </html>
