@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contribute & Feedback | ScholarSpace</title>
-  <meta name="description" content="Share notes with ScholarSpace, report a broken link or send feedback.">
+  <title>Upload notes | ScholarSpace</title>
+  <meta name="description" content="Upload notes and previous year papers to ScholarSpace, request a subject or send feedback.">
   <meta name="theme-color" content="#4f46e5">
-  <meta property="og:title" content="Contribute & Feedback | ScholarSpace">
-  <meta property="og:description" content="Share notes with ScholarSpace, report a broken link or send feedback.">
+  <meta property="og:title" content="Upload notes | ScholarSpace">
+  <meta property="og:description" content="Upload notes and previous year papers to ScholarSpace, request a subject or send feedback.">
   <meta property="og:type" content="website">
   <link rel="icon" href="assets/img/favicon.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,29 +20,64 @@
 <body data-page="feedback">
 <main id="main">
   <section class="page-head"><div class="container">
-    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span aria-current="page">Contribute & Feedback</span></nav>
-    <h1>Contribute & feedback</h1>
-    <p class="lead">Share notes, report a broken link, request a subject or just tell us what you think.</p>
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span aria-current="page">Contribute</span></nav>
+    <h1>Share your notes</h1>
+    <p class="lead">Upload notes, previous year papers or practice sets. Every file is checked before it goes live, and your name is shown as the contributor if you add it.</p>
   </div></section>
-  <section style="padding-top:12px"><div class="container" style="max-width:760px">
-    <form class="form-card" id="feedback-form">
+
+  <section style="padding-top:12px"><div class="container contribute-layout">
+    <form class="form-card" id="upload-form" novalidate>
+      <h2 class="form-title"><i class="fa-solid fa-cloud-arrow-up"></i>Upload material</h2>
       <div class="form-grid">
-        <div class="field"><label for="name">Your name</label><input class="input" id="name" name="name" required autocomplete="name"></div>
-        <div class="field"><label for="course">Course & year <span class="muted">(optional)</span></label><input class="input" id="course" name="course" placeholder="e.g. B.Tech CSE, 2nd Year"></div>
+        <div class="field"><label for="up-program">Course</label><select class="input" id="up-program" required></select></div>
+        <div class="field" id="up-year-field"><label for="up-year">Year</label><select class="input" id="up-year"></select></div>
       </div>
-      <div class="field"><label for="topic">What is it about?</label>
-        <select class="input" id="topic" name="topic">
-          <option value="contribute">I want to share notes</option>
-          <option value="request">Request a subject or paper</option>
-          <option value="broken">Report a broken link</option>
-          <option value="feedback">General feedback</option>
-        </select></div>
-      <div class="field"><label for="message">Message</label><textarea class="input" id="message" name="message" required placeholder="Tell us the subject, unit and anything else useful. For notes, you can attach the files in the email that opens."></textarea></div>
-      <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane"></i>Continue in email</button>
-      <div class="note" id="sent" hidden style="margin-top:16px"><i class="fa-solid fa-circle-info"></i><span>Your email app should open with the message filled in. If nothing happens, write to <a href="mailto:contact.rahul82@gmail.com">contact.rahul82@gmail.com</a>.</span></div>
+      <div class="field"><label for="up-subject">Subject</label><select class="input" id="up-subject" required></select></div>
+      <div class="form-grid">
+        <div class="field"><label for="up-kind">Type</label>
+          <select class="input" id="up-kind">
+            <option value="notes">Notes</option>
+            <option value="papers">Previous year / sessional paper</option>
+            <option value="practice">Practice set / assignment</option>
+            <option value="books">Book / slides</option>
+            <option value="syllabus">Syllabus</option>
+          </select></div>
+        <div class="field"><label for="up-title">Title</label><input class="input" id="up-title" maxlength="120" required placeholder="e.g. Unit 3 notes, 2024-25 sessional 1"></div>
+      </div>
+      <div class="field"><label for="up-files">Files <span class="muted">(PDF, Word, PowerPoint, Excel, JPG or PNG · up to 5 files · 15 MB each)</span></label>
+        <input class="input" id="up-files" type="file" multiple required accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.jpg,.jpeg,.png"></div>
+      <div class="form-grid">
+        <div class="field"><label for="up-name">Your name <span class="muted">(optional, shown as credit)</span></label><input class="input" id="up-name" maxlength="60" autocomplete="name"></div>
+        <div class="field"><label for="up-email">Email <span class="muted">(optional, never shown)</span></label><input class="input" id="up-email" type="email" maxlength="100" autocomplete="email"></div>
+      </div>
+      <div class="field"><label for="up-note">Anything we should know? <span class="muted">(optional)</span></label><textarea class="input" id="up-note" maxlength="500" rows="3" placeholder="e.g. Teacher's name, unit numbers, which year's paper"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="up-website">Website</label><input id="up-website" tabindex="-1" autocomplete="off"></div>
+      <label class="check"><input type="checkbox" id="up-agree" required><span>I made these notes or have the right to share them, and they are not from a paid book or course.</span></label>
+      <button class="btn btn-primary" type="submit" id="up-submit"><i class="fa-solid fa-upload"></i>Upload for review</button>
+      <div id="up-status" class="up-status" role="status" aria-live="polite"></div>
     </form>
+
+    <aside class="side-stack">
+      <div class="card"><span class="card-icon"><i class="fa-solid fa-shield-halved"></i></span><h3>How it works</h3>
+        <ol class="steps"><li>You upload a file and pick the subject.</li><li>It stays private while it's checked.</li><li>Once approved, it appears on the subject page with your name.</li></ol></div>
+      <form class="card" id="feedback-form">
+        <span class="card-icon"><i class="fa-solid fa-comments"></i></span><h3>Request or feedback</h3>
+        <div class="field" style="margin:0"><label for="topic" class="sr-only">Topic</label>
+          <select class="input" id="topic" name="topic">
+            <option value="request">Request a subject or paper</option>
+            <option value="broken">Report a broken link</option>
+            <option value="feedback">General feedback</option>
+            <option value="contribute">Share notes by email</option>
+          </select></div>
+        <div class="field" style="margin:0"><label for="message" class="sr-only">Message</label><textarea class="input" id="message" name="message" rows="4" required placeholder="Your message"></textarea></div>
+        <div class="field" style="margin:0"><label for="name" class="sr-only">Your name</label><input class="input" id="name" name="name" required placeholder="Your name" autocomplete="name"></div>
+        <button class="btn btn-ghost" type="submit"><i class="fa-solid fa-paper-plane"></i>Continue in email</button>
+        <div class="note" id="sent" hidden><i class="fa-solid fa-circle-info"></i><span>Your email app should open with the message filled in. If nothing happens, write to <a href="mailto:contact.rahul82@gmail.com">contact.rahul82@gmail.com</a>.</span></div>
+      </form>
+    </aside>
   </div></section>
 </main>
+  <script src="assets/js/config.js"></script>
   <script src="assets/js/catalog.js"></script>
   <script src="assets/js/app.js"></script>
 </body>

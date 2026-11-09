@@ -46,7 +46,7 @@ WhatsApp groups and private drives; ScholarSpace puts it in one searchable place
 | 🧮 **SGPA calculator** | Add subjects, credits and marks; SGPA, grades and average update live (10-point scale). |
 | 🌗 **Light & dark mode** | Follows the system theme, with a toggle. |
 | 📱 **Responsive** | Designed for phones first; works on tablets and desktops. |
-| ✉️ **Contribute** | Students can share notes or request subjects through the contribute page. |
+| ⬆️ **Moderated uploads** | Students upload notes and papers; the owner reviews each file and approves it before it appears on the site. |
 
 ## 🛠️ How it works
 
@@ -97,15 +97,20 @@ Open http://localhost:8000.
    (in `tools/build_catalog.py`; BBD University subjects use program `B`, ITM College subjects use `I`) and run it again. Optionally add a clean title in `tools/titles.tsv`.
 4. Commit and push; Vercel redeploys automatically.
 
+## ⬆️ Student uploads
+
+The Contribute page sends files to a Google Apps Script web app ([`tools/uploads/Code.gs`](scholarspace%20main/tools/uploads/Code.gs))
+running in the owner's Google account. Files stay private until the owner approves them on the review page;
+approved files appear on their subject page within minutes. Setup steps: [`tools/uploads/README.md`](scholarspace%20main/tools/uploads/README.md).
+
 ## 🔮 Roadmap
 
-* [ ] Upload form that sends contributed notes straight to a review folder
 * [ ] Year-wise pages for more programmes (B.Pharm, other B.Tech branches)
 * [ ] Bookmark favourite subjects
 
 ## 📬 Author
 
-**Rahul Singh**, Backend Developer and B.Tech CSE student at BBD University
+**Rahul Singh**, SDE Intern candidate (Java · Spring Boot · React) and final-year B.Tech CSE student at BBD University, Lucknow
 
 <p align="left">
 <a href="https://www.linkedin.com/in/rahul-singh-cs/" target="blank"><img align="center" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>

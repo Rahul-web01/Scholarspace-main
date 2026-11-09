@@ -3,6 +3,7 @@
   "use strict";
 
   var CAT = window.CATALOG || { programs: [], subjects: [] };
+  var UPLOADS_URL = (window.SS_CONFIG && window.SS_CONFIG.uploadsUrl) || "";
   var CONTACT = {
     email: "contact.rahul82@gmail.com",
     github: "https://github.com/Rahul-web01",
@@ -88,6 +89,37 @@
       if (val === undefined) return localStorage.getItem(key);
       localStorage.setItem(key, val);
     } catch (e) { return null; }
+  }
+
+  /* ---------- approved student uploads (tools/uploads/Code.gs) ---------- */
+  var COMMUNITY_KEY = "ss-community";
+  function mergeCommunity(items) {
+    var changed = [];
+    (items || []).forEach(function (it) {
+      var s = subject(it.s);
+      if (!s || !it.f) return;
+      s.files = s.files || [];
+      if (s.files.some(function (f) { return f.id === it.f; })) return;
+      s.files.push({ t: String(it.t || "Untitled"), k: TYPES[it.k] ? it.k : "notes", id: String(it.f), x: String(it.x || "file"), c: 1, by: String(it.by || "") });
+      changed.push(s.id);
+    });
+    if (changed.length) INDEX = null;
+    return changed;
+  }
+  function cachedCommunity() {
+    try { var v = JSON.parse(sessionStorage.getItem(COMMUNITY_KEY) || "null"); return v && v.items ? v : null; } catch (e) { return null; }
+  }
+  function loadCommunity(onNew) {
+    if (!UPLOADS_URL) return;
+    var cached = cachedCommunity();
+    if (cached) mergeCommunity(cached.items);
+    if (cached && Date.now() - cached.at < 5 * 60 * 1000) return;
+    fetch(UPLOADS_URL + "?action=list").then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || !d.items) return;
+      try { sessionStorage.setItem(COMMUNITY_KEY, JSON.stringify({ at: Date.now(), items: d.items })); } catch (e) { /* storage full or blocked */ }
+      var changed = mergeCommunity(d.items);
+      if (changed.length && onNew) onNew(changed);
+    }).catch(function () { /* the site works without community uploads */ });
   }
 
   /* ---------- theme ---------- */
@@ -421,7 +453,7 @@
     if (!files.length) {
       $("#files").innerHTML = '<div class="empty-state"><i class="fa-solid fa-hourglass-half"></i><h3>Material coming soon</h3>' +
         "<p>We don’t have files for " + esc(s.name) + " yet. If you have notes or papers for this subject, please share them.</p>" +
-        '<a class="btn btn-primary" href="feedback.html?subject=' + encodeURIComponent(s.name) + '"><i class="fa-solid fa-upload"></i>Contribute notes</a></div>';
+        '<a class="btn btn-primary" href="feedback.html?subject=' + encodeURIComponent(s.id) + '"><i class="fa-solid fa-upload"></i>Upload notes</a></div>';
       return;
     }
 
@@ -430,7 +462,8 @@
       var t = TYPES[f.k];
       return '<div class="file t-' + f.k + '"><span class="file-icon"><i class="fa-solid ' + (EXT_ICON[f.x] || "fa-file") + '"></i></span>' +
         '<div class="file-main"><a href="' + fileUrl(f.id) + '" target="_blank" rel="noopener">' + esc(f.t) + "</a>" +
-        '<div class="file-sub"><span class="chip t-' + f.k + '"><i class="fa-solid ' + t.icon + '"></i>' + (t.short || t.label) + "</span><span>" + esc(f.x.toUpperCase()) + "</span></div></div>" +
+        '<div class="file-sub"><span class="chip t-' + f.k + '"><i class="fa-solid ' + t.icon + '"></i>' + (t.short || t.label) + "</span><span>" + esc(f.x.toUpperCase()) + "</span>" +
+        (f.c ? '<span class="chip chip-community"><i class="fa-solid fa-user-pen"></i>' + (f.by ? "Shared by " + esc(f.by) : "Student upload") + "</span>" : "") + "</div></div>" +
         '<div class="file-actions"><a class="btn btn-ghost btn-sm" href="' + fileUrl(f.id) + '" target="_blank" rel="noopener"><i class="fa-regular fa-eye"></i>View</a>' +
         '<a class="btn btn-ghost btn-sm" href="' + downloadUrl(f.id) + '" target="_blank" rel="noopener" aria-label="Download ' + esc(f.t) + '"><i class="fa-solid fa-download"></i><span>Download</span></a></div></div>';
     }
@@ -508,21 +541,106 @@
   }
 
   function pageFeedback() {
-    var subj = param("subject"), topicParam = param("topic");
+    /* ---- request / feedback by email ---- */
+    var topicParam = param("topic");
     if (topicParam && $("#topic option[value='" + topicParam.replace(/[^a-z]/g, "") + "']")) $("#topic").value = topicParam;
-    if (subj) {
-      $("#topic").value = "contribute";
-      $("#message").value = "I'd like to share notes for: " + subj + "\n\n";
-    }
     $("#feedback-form").addEventListener("submit", function (e) {
       e.preventDefault();
       var el = e.target.elements;
       var topicSel = el.namedItem("topic");
-      var topic = topicSel.options[topicSel.selectedIndex].text;
-      var course = el.namedItem("course").value.trim();
-      var body = el.namedItem("message").value + "\n\n- " + el.namedItem("name").value.trim() + (course ? " (" + course + ")" : "");
-      location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent("ScholarSpace: " + topic) + "&body=" + encodeURIComponent(body);
+      var body = el.namedItem("message").value + "\n\n- " + el.namedItem("name").value.trim();
+      location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent("ScholarSpace: " + topicSel.options[topicSel.selectedIndex].text) + "&body=" + encodeURIComponent(body);
       $("#sent").hidden = false;
+    });
+
+    /* ---- upload form ---- */
+    var MAX_FILES = 5, MAX_BYTES = 15 * 1024 * 1024, OK_EXT = /\.(pdf|docx?|pptx?|xlsx?|jpe?g|png)$/i;
+    var progSel = $("#up-program"), yearSel = $("#up-year"), subjSel = $("#up-subject"), status = $("#up-status");
+    var progs = CAT.programs.filter(function (p) { return p.id !== "syllabus" && subjectsOf(p.id).length; });
+    progSel.innerHTML = progs.map(function (p) { return '<option value="' + p.id + '">' + esc(p.name) + "</option>"; }).join("");
+    function fillYears() {
+      var p = program(progSel.value);
+      $("#up-year-field").hidden = !p.years;
+      if (p.years) {
+        var ys = [1, 2, 3, 4].filter(function (y) { return subjectsOf(p.id, y).length; });
+        yearSel.innerHTML = ys.map(function (y) { return '<option value="' + y + '">' + YEARS[y].name + "</option>"; }).join("");
+      }
+      fillSubjects();
+    }
+    function fillSubjects() {
+      var p = program(progSel.value);
+      var list = subjectsOf(p.id, p.years ? parseInt(yearSel.value, 10) : null).slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+      subjSel.innerHTML = list.map(function (s) { return '<option value="' + s.id + '">' + esc(s.name) + (s.code ? " (" + esc(s.code) + ")" : "") + "</option>"; }).join("");
+    }
+    progSel.addEventListener("change", fillYears);
+    yearSel.addEventListener("change", fillSubjects);
+    fillYears();
+    var pre = subject(param("subject") || "");
+    if (pre) {
+      progSel.value = pre.program; fillYears();
+      if (pre.year) { yearSel.value = String(pre.year); fillSubjects(); }
+      subjSel.value = pre.id;
+    }
+
+    function say(kind, html) { status.className = "up-status " + kind; status.innerHTML = html; }
+    function readBase64(file) {
+      return new Promise(function (resolve, reject) {
+        var r = new FileReader();
+        r.onload = function () { resolve(String(r.result).split(",")[1] || ""); };
+        r.onerror = function () { reject(new Error("Could not read " + file.name)); };
+        r.readAsDataURL(file);
+      });
+    }
+
+    $("#upload-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var files = Array.prototype.slice.call($("#up-files").files || []);
+      var title = $("#up-title").value.trim();
+      var s = subject(subjSel.value);
+      if (!s) return say("error", "Please choose a subject.");
+      if (title.length < 3) { $("#up-title").focus(); return say("error", "Please give the file a short title."); }
+      if (!files.length) return say("error", "Please choose at least one file.");
+      if (files.length > MAX_FILES) return say("error", "You can upload up to " + MAX_FILES + " files at a time.");
+      var bad = files.filter(function (f) { return !OK_EXT.test(f.name) || f.size > MAX_BYTES || !f.size; });
+      if (bad.length) return say("error", esc(bad[0].name) + " can't be uploaded. Use PDF, Word, PowerPoint, Excel, JPG or PNG files of 15 MB or less.");
+      if (!$("#up-agree").checked) return say("error", "Please confirm you have the right to share these files.");
+
+      var p = program(s.program);
+      var base = {
+        subjectId: s.id, subjectName: s.name, course: p.name + (s.year ? " · " + YEARS[s.year].name : ""),
+        kind: $("#up-kind").value, name: $("#up-name").value.trim(), email: $("#up-email").value.trim(),
+        note: $("#up-note").value.trim(), website: $("#up-website").value
+      };
+
+      if (!UPLOADS_URL) {  // uploads not set up yet: hand over to email
+        var body = "Subject: " + s.name + " (" + base.course + ")\nType: " + base.kind + "\nTitle: " + title + "\n\n" + base.note +
+          "\n\nI'll attach the files to this email.\n- " + (base.name || "");
+        location.href = "mailto:" + CONTACT.email + "?subject=" + encodeURIComponent("Notes for ScholarSpace: " + s.name) + "&body=" + encodeURIComponent(body);
+        return say("info", "Your email app should open. Please attach your files there and send it.");
+      }
+
+      var btn = $("#up-submit"); btn.disabled = true;
+      var done = 0, failed = [];
+      say("info", '<i class="fa-solid fa-spinner fa-spin"></i> Uploading 1 of ' + files.length + "…");
+      files.reduce(function (chain, f, i) {
+        return chain.then(function () {
+          say("info", '<i class="fa-solid fa-spinner fa-spin"></i> Uploading ' + (i + 1) + " of " + files.length + ": " + esc(f.name) + "…");
+          return readBase64(f).then(function (data) {
+            var payload = Object.assign({}, base, { title: files.length > 1 ? title + " (" + (i + 1) + ")" : title, fileName: f.name, data: data });
+            return fetch(UPLOADS_URL, { method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload) });
+          }).then(function (r) { return r.json(); }).then(function (res) {
+            if (res && res.ok) done++; else failed.push(f.name + ": " + ((res && res.error) || "upload failed"));
+          }).catch(function () { failed.push(f.name + ": network error"); });
+        });
+      }, Promise.resolve()).then(function () {
+        btn.disabled = false;
+        if (done && !failed.length) {
+          say("success", '<i class="fa-solid fa-circle-check"></i> Thank you! ' + plural(done, "file") + " sent for review. Once approved, " + (done > 1 ? "they" : "it") + " will appear on the " + esc(s.name) + " page.");
+          $("#up-files").value = ""; $("#up-title").value = ""; $("#up-note").value = "";
+        } else {
+          say(done ? "info" : "error", (done ? plural(done, "file") + " uploaded. " : "") + "Some files didn't upload:<br>" + failed.map(esc).join("<br>"));
+        }
+      });
     });
   }
 
@@ -530,6 +648,9 @@
     var page = document.body.getAttribute("data-page");
     mountLayout(page === "subject" ? "browse" : page);
     var run = { home: pageHome, browse: pageBrowse, subject: pageSubject, sgpa: pageSgpa, feedback: pageFeedback }[page];
+    loadCommunity(function (changed) {  // newly approved uploads arrived after the page was drawn
+      if (page === "subject" && changed.indexOf(param("id")) !== -1) pageSubject();
+    });
     if (run) run();
   });
 })();
