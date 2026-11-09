@@ -331,17 +331,6 @@ textarea.input { resize: vertical; min-height: 140px; }
   .college-switch .tab { justify-content: center; padding: 9px 6px; font-size: 0.85rem; white-space: nowrap; }
 }
 
-/* ---------- about page ---------- */
-.about-stats { max-width: none; margin-top: 20px; }
-.timeline { display: grid; gap: 16px; }
-.tl-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
-.tl-head h3 { margin: 0; }
-.tl-head p { margin: 2px 0 0; }
-.tl-item .list-check { font-size: 0.93rem; color: var(--muted); }
-.list-check.small { font-size: 0.88rem; color: var(--muted); gap: 8px; }
-.card-foot a { color: var(--primary); text-decoration: none; font-weight: 600; }
-@media (max-width: 640px) { .about-stats { grid-template-columns: repeat(2, 1fr); } }
-
 /* ---------- contribute / uploads ---------- */
 .contribute-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
 .side-stack { display: grid; gap: 16px; }
