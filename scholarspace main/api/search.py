@@ -117,10 +117,10 @@ def search(query, subject=None):
     meta = {}
     for i in range(0, len(ids), 500):
         part = ids[i:i + 500]
-        for cid, fid, page, text, sid, subj, course, title, kind in con.execute(
-                "SELECT c.id, c.file_id, c.page, c.text, f.subject_id, f.subject, f.course, f.title, f.kind FROM chunks c "
+        for cid, fid, page, text, sid, subj, course, title, kind, ocr in con.execute(
+                "SELECT c.id, c.file_id, c.page, c.text, f.subject_id, f.subject, f.course, f.title, f.kind, c.ocr FROM chunks c "
                 "JOIN files f ON f.id = c.file_id WHERE c.id IN (%s)" % ",".join("?" * len(part)), part):
-            meta[cid] = (fid, page, text, sid, subj, course, title, kind)
+            meta[cid] = (fid, page, text, sid, subj, course, title, kind, ocr)
     wants_papers = bool(re.search(r"\b(question|paper|pyq|exam|important)\b", query.lower()))
     weight = {"syllabus": 0.45, "papers": 1.0 if wants_papers else 0.8}
     ranked = sorted(((score * weight.get(meta[cid][7], 1.0), cid) for cid, score in rows
@@ -129,7 +129,7 @@ def search(query, subject=None):
     stems = [stem(t) for t in terms]
     results, per_file, points = [], {}, []
     for _, cid in ranked:
-        fid, page, blob, sid, subj, course, title, kind = meta[cid]
+        fid, page, blob, sid, subj, course, title, kind, ocr = meta[cid]
         if per_file.get(fid, 0) >= 2:
             continue
         per_file[fid] = per_file.get(fid, 0) + 1
@@ -154,12 +154,12 @@ def search(query, subject=None):
         if len(snippet) > SNIPPET + 120:
             snippet = snippet[: SNIPPET + 120].rsplit(" ", 1)[0] + " …"
         results.append({"n": n, "title": title, "subject": subj, "subjectId": sid, "course": course, "page": page,
-                         "url": "https://drive.google.com/file/d/%s/view" % fid,
+                         "url": "https://drive.google.com/file/d/%s/view" % fid, "scanned": bool(ocr),
                          "snippet": ("… " if lo > 0 else "") + snippet + (" …" if hi < len(sents) - 1 else "")})
         need = max(1, math.ceil(len(stems) * 0.6))
         for s, sc in zip(sents, scores):
             if kind != "syllabus" and sc >= max(1, need - 0.5) and 30 <= len(s) <= 400 and readable(s):
-                points.append((-sc, n, s))
+                points.append((bool(ocr), -sc, n, s))  # typed text first: OCR sentences only fill the gaps
         if len(results) >= MAX_RESULTS:
             break
 
@@ -168,7 +168,7 @@ def search(query, subject=None):
     found = {st: sum(1 for t in texts if st in t) for st in stems}
     specific = min((st for st in stems if found[st]), key=lambda st: found[st], default=None)
     key_points, seen = [], set()
-    for _, n, s in sorted(points)[:30]:
+    for _, _, n, s in sorted(points)[:30]:
         if specific and len(stems) > 1 and specific not in s.lower():
             continue
         sig = re.sub(r"[^a-z0-9]", "", s.lower())[:80]

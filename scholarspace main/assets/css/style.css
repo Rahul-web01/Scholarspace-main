@@ -403,3 +403,4 @@ mark { background: color-mix(in srgb, #facc15 45%, transparent); color: inherit;
 .cite:hover { background: var(--primary); color: var(--on-primary); }
 .ask-note { margin: 20px 0 0; font-size: 0.82rem; color: var(--muted); }
 @media (max-width: 560px) { .ask-row .btn span { display: none; } .ask-scope { flex-wrap: wrap; } .ask-scope select { width: 100%; } }
+.chip-scanned { --c: var(--papers); --c-soft: var(--papers-soft); align-self: flex-start; }

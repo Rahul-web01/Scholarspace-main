@@ -4,9 +4,10 @@
     python3 tools/rag/extract_text.py            # uses the default local folders below
     SS_DATA_ROOT=... SS_BBA_ROOT=... python3 tools/rag/extract_text.py
 
-Reads assets/js/catalog.js (which files are on the site) and the Drive trees (where each file lives), takes
-each file from the local copy of the Drive folder (or downloads it from its public Drive link if there is
-no local copy), and writes tools/rag/.cache/<drive id>.json = {"pages": ["text of page 1", ...]}.
+Reads assets/js/catalog.js (which files are on the site), the approved student uploads (from the uploads web app
+in assets/js/config.js, saved to tools/rag/community.json) and the Drive trees (where each file lives). Each file is
+taken from the local copy of the Drive folder, or downloaded from its public Drive link if there is no local copy,
+and written to tools/rag/.cache/<drive id>.json = {"pages": ["text of page 1", ...]}.
 Files already in the cache are skipped, so re-runs only process new uploads.
 Scanned or handwritten PDFs have no text layer and come out empty; they are simply not searchable.
 """
@@ -33,6 +34,46 @@ ROOTS = [
 def catalog():
     src = open(os.path.join(SITE, "assets", "js", "catalog.js"), encoding="utf8").read()
     return json.loads(re.search(r"window\.CATALOG = (.*);\s*$", src, re.S).group(1))
+
+
+COMMUNITY = os.path.join(HERE, "community.json")
+
+
+def uploads_url():
+    src = open(os.path.join(SITE, "assets", "js", "config.js"), encoding="utf8").read()
+    m = re.search(r'uploadsUrl:\s*"([^"]*)"', src)
+    return m.group(1) if m else ""
+
+
+def refresh_community():
+    """Save the list of approved student uploads (if the uploads web app is set up)."""
+    url = uploads_url()
+    if not url:
+        return
+    try:
+        req = urllib.request.Request(url + "?action=list", headers={"User-Agent": "Mozilla/5.0"})
+        items = json.load(urllib.request.urlopen(req, timeout=60)).get("items", [])
+    except Exception as e:  # keep the last saved list if the web app can't be reached
+        print("could not fetch approved uploads:", e, file=sys.stderr)
+        return
+    with open(COMMUNITY, "w", encoding="utf8") as f:
+        json.dump(sorted(items, key=lambda it: it.get("id", "")), f, ensure_ascii=False, indent=1)
+
+
+def published_files():
+    """Every file the site shows: [{"id", "x" (extension), "k" (type), "t" (title), "subject" (id)}]."""
+    files, seen = [], set()
+    for s in catalog()["subjects"]:
+        for f in s.get("files", []):
+            files.append({"id": f["id"], "x": f["x"], "k": f["k"], "t": f["t"], "subject": s["id"]})
+            seen.add(f["id"])
+    if os.path.exists(COMMUNITY):  # approved student uploads
+        for it in json.load(open(COMMUNITY, encoding="utf8")):
+            if it.get("f") and it["f"] not in seen:
+                files.append({"id": it["f"], "x": it.get("x") or "pdf", "k": it.get("k") or "notes",
+                              "t": it.get("t") or "Student upload", "subject": it.get("s", ""), "community": True})
+                seen.add(it["f"])
+    return files
 
 
 def local_paths():
@@ -73,8 +114,11 @@ def pages_of(path, ext):
 
 
 def download(fid, ext):
-    url = "https://drive.google.com/uc?export=download&id=" + fid
+    # drive.usercontent with confirm=t also works for big files that show a "can't scan for viruses" page
+    url = "https://drive.usercontent.google.com/download?export=download&confirm=t&id=" + fid
     data = urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"}), timeout=120).read()
+    if data[:200].lstrip().lower().startswith((b"<!doctype html", b"<html")):
+        raise RuntimeError("Drive returned a web page instead of the file (is it shared publicly?)")
     tmp = tempfile.NamedTemporaryFile(suffix="." + ext, delete=False)
     tmp.write(data); tmp.close()
     return tmp.name
@@ -106,8 +150,9 @@ def work(item):
 
 def main():
     os.makedirs(CACHE, exist_ok=True)
-    cat, paths = catalog(), local_paths()
-    items = [(f["id"], f["x"], paths.get(f["id"])) for s in cat["subjects"] for f in s.get("files", [])]
+    refresh_community()
+    paths = local_paths()
+    items = [(f["id"], f["x"], paths.get(f["id"])) for f in published_files()]
     done = errors = 0
     with cf.ThreadPoolExecutor(max(2, (os.cpu_count() or 4))) as ex:
         for fid, status in ex.map(work, items):

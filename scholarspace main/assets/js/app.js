@@ -583,6 +583,7 @@
           return '<article class="card passage" id="res-' + r.n + '"><div class="passage-head"><span class="passage-n">' + r.n + "</span><div>" +
             '<a class="passage-title" href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.title) + "</a>" +
             '<div class="passage-meta"><a href="subject.html?id=' + encodeURIComponent(r.subjectId) + '">' + esc(r.subject) + "</a> · " + esc(r.course) + " · page " + r.page + "</div></div></div>" +
+            (r.scanned ? '<span class="chip chip-scanned"><i class="fa-solid fa-camera"></i>Scanned page · text read automatically, may have mistakes</span>' : "") +
             "<p>" + highlight(r.snippet, stems) + "</p>" +
             '<div class="passage-actions"><a class="btn btn-ghost btn-sm" href="' + esc(r.url) + '" target="_blank" rel="noopener"><i class="fa-regular fa-eye"></i>Open file (page ' + r.page + ")</a>" +
             '<a class="btn btn-ghost btn-sm" href="subject.html?id=' + encodeURIComponent(r.subjectId) + '"><i class="fa-solid fa-book-open"></i>All ' + esc(r.subject) + " files</a></div></article>";

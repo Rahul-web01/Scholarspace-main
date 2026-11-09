@@ -1,0 +1,80 @@
+# Every night (and whenever you press "Run workflow" on the Actions tab):
+#   1. re-read both public Drive folders and rebuild the site's file list,
+#   2. fetch the approved student uploads,
+#   3. extract text from new files and read new scanned / handwritten pages with OCR (free, CPU),
+#   4. rebuild the Ask Notes search index,
+#   5. commit and push if anything changed - Vercel then redeploys the site.
+# Text that was already read is kept in tools/rag/text/, so each run only reads what is new.
+name: Update notes and search
+
+on:
+  schedule:
+    - cron: "30 20 * * *" # 02:00 India time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-notes
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    defaults:
+      run:
+        working-directory: scholarspace main
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install tools (PDF utilities, word list, OCR)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q poppler-utils wamerican
+          pip install -q rapidocr onnxruntime opencv-python-headless
+
+      - name: Re-read the Drive folders and rebuild the file list
+        run: |
+          python3 tools/crawl_drive.py 1KDEa-DkdkNl6FuhUDO9upWKTaSeQlRNC tools/drive-tree.tsv
+          python3 tools/crawl_drive.py 1GhW9UVlo35eLvbHPEsSv4NiCul0hkml6 tools/bba-drive-tree.tsv
+          python3 tools/build_catalog.py | tee catalog.log || true
+          if grep -q "NOT LINKED\|PROBLEM" catalog.log; then
+            echo "### Files that need a subject" >> "$GITHUB_STEP_SUMMARY"
+            echo "Add these to SUBJECTS in tools/build_catalog.py so they appear on the site:" >> "$GITHUB_STEP_SUMMARY"
+            grep "NOT LINKED\|PROBLEM" catalog.log | sed 's/^/- /' >> "$GITHUB_STEP_SUMMARY"
+          fi
+          rm catalog.log
+
+      - name: Extract text from new files
+        run: |
+          python3 tools/rag/text_store.py unpack
+          python3 tools/rag/extract_text.py
+
+      - name: Read new scanned and handwritten pages (OCR)
+        run: python3 tools/rag/ocr_pages.py --max-minutes 290
+
+      - name: Rebuild the search index
+        run: |
+          python3 tools/rag/text_store.py pack
+          python3 tools/rag/build_index.py | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish changes
+        run: |
+          git config user.name "scholarspace-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add tools/drive-tree.tsv tools/bba-drive-tree.tsv assets/js/catalog.js tools/rag/text api/_rag/index.db
+          if [ -f tools/rag/community.json ]; then git add tools/rag/community.json; fi
+          if git diff --cached --quiet; then
+            echo "Nothing new tonight." | tee -a "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git commit -q -m "Update notes and search index"
+          git pull -q --rebase
+          git push -q
+          echo "Published new notes; Vercel is redeploying." | tee -a "$GITHUB_STEP_SUMMARY"

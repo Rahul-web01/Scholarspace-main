@@ -10,7 +10,8 @@ def fetch(fid):
             return urllib.request.urlopen(req, timeout=60).read().decode("utf8", "replace")
         except Exception as e:
             err = e
-    print("FAILED", fid, err, file=sys.stderr); return ""
+    print("FAILED", fid, err, file=sys.stderr); FAILED.append(fid); return ""
+FAILED = []
 rows, todo = [("", "folder", root)], [("", root)]
 with cf.ThreadPoolExecutor(8) as ex:
     while todo:
@@ -21,6 +22,8 @@ with cf.ThreadPoolExecutor(8) as ex:
                 kind = "folder" if "/folders/" in url else "file"
                 rows.append((p, kind, fid))
                 if kind == "folder": todo.append((p, fid))
+if FAILED:  # a partial list would make files vanish from the site, so keep the old one
+    sys.exit(f"{len(FAILED)} folder(s) could not be read; {out} was not changed")
 with open(out, "w") as f:
     for r in rows: f.write("\t".join(r) + "\n")
 print("folders", sum(r[1]=="folder" for r in rows), "files", sum(r[1]=="file" for r in rows))
