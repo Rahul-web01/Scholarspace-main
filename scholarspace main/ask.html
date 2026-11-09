@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ask Notes | ScholarSpace</title>
+  <meta name="description" content="Search inside every ScholarSpace note, paper and book and see the exact passages that answer your question.">
+  <meta name="theme-color" content="#4f46e5">
+  <meta property="og:title" content="Ask Notes | ScholarSpace">
+  <meta property="og:description" content="Search inside every ScholarSpace note, paper and book and see the exact passages that answer your question.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>try{var t=localStorage.getItem("ss-theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
+</head>
+<body data-page="ask">
+<main id="main">
+  <section class="page-head"><div class="container ask-wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span aria-current="page">Ask Notes</span></nav>
+    <h1>Ask Notes</h1>
+    <p class="lead">Type a question or topic. ScholarSpace searches inside every note, paper and book and shows you the exact passages that answer it, with the key lines highlighted.</p>
+    <form id="ask-form" class="form-card ask-form" role="search">
+      <div class="ask-row">
+        <label for="ask-input" class="sr-only">Your question</label>
+        <input class="input" id="ask-input" type="search" maxlength="300" placeholder="e.g. What is normalization in DBMS?" autocomplete="off">
+        <button class="btn btn-primary" type="submit" id="ask-btn"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></button>
+      </div>
+      <div class="ask-scope">
+        <label for="ask-subject"><i class="fa-solid fa-filter"></i> Search in</label>
+        <select class="input" id="ask-subject"></select>
+      </div>
+    </form>
+    <div id="suggest" class="suggest"></div>
+  </div></section>
+
+  <section style="padding-bottom:48px"><div class="container ask-wrap">
+    <div id="ask-results" aria-live="polite"></div>
+    <p class="ask-note"><i class="fa-solid fa-circle-info"></i> Searches typed notes, papers and books. Scanned handwritten notes can’t be searched yet; find them on the subject pages.</p>
+  </div></section>
+</main>
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/catalog.js"></script>
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

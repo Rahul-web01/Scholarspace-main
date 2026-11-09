@@ -1,0 +1,4 @@
+# Extracted note text, rebuilt by tools/rag/extract_text.py
+tools/rag/.cache/
+__pycache__/
+*.pyc

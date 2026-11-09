@@ -3,18 +3,76 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/uni1", "destination": "/browse", "permanent": true },
-    { "source": "/dep1", "destination": "/browse", "permanent": true },
-    { "source": "/course1", "destination": "/browse", "permanent": true },
-    { "source": "/cse", "destination": "/browse?program=btech-cse", "permanent": true },
-    { "source": "/year1", "destination": "/browse?program=btech-cse", "permanent": true },
-    { "source": "/first", "destination": "/browse?program=btech-cse&year=1", "permanent": true },
-    { "source": "/second", "destination": "/browse?program=btech-cse&year=2", "permanent": true },
-    { "source": "/feedback1", "destination": "/feedback", "permanent": true },
-    { "source": "/selectcourse", "destination": "/sgpa", "permanent": true },
-    { "source": "/select_semester_ai", "destination": "/sgpa", "permanent": true },
-    { "source": "/B_tech_:rest*", "destination": "/sgpa", "permanent": true },
-    { "source": "/sgpa/index", "destination": "/sgpa", "permanent": true },
-    { "source": "/sgpa/", "destination": "/sgpa", "permanent": true }
-  ]
+    {
+      "source": "/uni1",
+      "destination": "/browse",
+      "permanent": true
+    },
+    {
+      "source": "/dep1",
+      "destination": "/browse",
+      "permanent": true
+    },
+    {
+      "source": "/course1",
+      "destination": "/browse",
+      "permanent": true
+    },
+    {
+      "source": "/cse",
+      "destination": "/browse?program=btech-cse",
+      "permanent": true
+    },
+    {
+      "source": "/year1",
+      "destination": "/browse?program=btech-cse",
+      "permanent": true
+    },
+    {
+      "source": "/first",
+      "destination": "/browse?program=btech-cse&year=1",
+      "permanent": true
+    },
+    {
+      "source": "/second",
+      "destination": "/browse?program=btech-cse&year=2",
+      "permanent": true
+    },
+    {
+      "source": "/feedback1",
+      "destination": "/feedback",
+      "permanent": true
+    },
+    {
+      "source": "/selectcourse",
+      "destination": "/sgpa",
+      "permanent": true
+    },
+    {
+      "source": "/select_semester_ai",
+      "destination": "/sgpa",
+      "permanent": true
+    },
+    {
+      "source": "/B_tech_:rest*",
+      "destination": "/sgpa",
+      "permanent": true
+    },
+    {
+      "source": "/sgpa/index",
+      "destination": "/sgpa",
+      "permanent": true
+    },
+    {
+      "source": "/sgpa/",
+      "destination": "/sgpa",
+      "permanent": true
+    }
+  ],
+  "functions": {
+    "api/search.py": {
+      "maxDuration": 10,
+      "includeFiles": "api/_rag/**"
+    }
+  }
 }

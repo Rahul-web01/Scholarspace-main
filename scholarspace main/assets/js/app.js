@@ -134,7 +134,7 @@
   /* ---------- layout ---------- */
   function header(active) {
     var links = [
-      ["index.html", "Home", "home"], ["browse.html", "Browse", "browse"], ["sgpa.html", "SGPA Calculator", "sgpa"],
+      ["index.html", "Home", "home"], ["browse.html", "Browse", "browse"], ["ask.html", "Ask Notes", "ask"], ["sgpa.html", "SGPA Calculator", "sgpa"],
       ["about.html", "About", "about"], ["feedback.html", "Contribute", "feedback"]
     ];
     return '<a class="skip-link" href="#main">Skip to content</a>' +
@@ -441,7 +441,7 @@
     app.innerHTML = '<section class="page-head"><div class="container">' + crumbs(trail) +
       '<div class="subject-hero"><span class="card-icon"><i class="' + brandIcon(s.icon) + '"></i></span><div class="info">' +
       "<h1>" + esc(s.name) + '</h1><div class="meta" style="gap:8px">' + meta.join("") + "</div>" +
-      '<div class="subject-actions">' + folderBtns + "</div></div></div>" +
+      '<div class="subject-actions"><a class="btn btn-primary" href="ask.html?subject=' + encodeURIComponent(s.id) + '"><i class="fa-solid fa-magnifying-glass"></i>Search inside these notes</a>' + folderBtns + "</div></div></div>" +
       (files.length ? '<div class="toolbar"><div class="tabs" role="tablist" aria-label="File type">' + tabs.map(function (k, i) {
         var n = k === "all" ? files.length : c[k];
         return '<button class="tab" type="button" role="tab" data-k="' + k + '" aria-selected="' + (i === 0) + '">' +
@@ -538,6 +538,78 @@
       return "<tr><td>" + g[0] + "–" + hi + "</td><td>" + g[2] + "</td><td>" + g[1] + "</td></tr>";
     }).join("");
     calc();
+  }
+
+  /* ---------- Ask Notes: free full-text search inside the notes (api/search.py) ---------- */
+  function highlight(text, stems) {
+    var html = esc(text);
+    if (!stems.length) return html;
+    var re = new RegExp("\\b(" + stems.map(function (t) { return t.replace(/[^a-z0-9]/g, ""); }).filter(Boolean).join("|") + ")[a-z0-9]*", "gi");
+    return html.replace(re, "<mark>$&</mark>");
+  }
+
+  function pageAsk() {
+    var form = $("#ask-form"), input = $("#ask-input"), btn = $("#ask-btn"), sel = $("#ask-subject"), out = $("#ask-results");
+
+    sel.innerHTML = '<option value="">All subjects</option>' + CAT.programs.filter(function (p) { return p.id !== "syllabus"; }).map(function (p) {
+      var list = subjectsOf(p.id).filter(function (x) { return x.files && x.files.length; }).sort(function (a, b) { return (a.year || 0) - (b.year || 0) || a.name.localeCompare(b.name); });
+      return list.length ? '<optgroup label="' + esc(p.name) + '">' + list.map(function (x) {
+        return '<option value="' + x.id + '">' + esc(x.name) + (x.year ? " (" + YEARS[x.year].name + ")" : "") + "</option>";
+      }).join("") + "</optgroup>" : "";
+    }).join("");
+    var pre = subject(param("subject") || "");
+    if (pre) { sel.value = pre.id; input.placeholder = "Ask anything about " + pre.name; }
+
+    var ideas = pre ? [] : ["What is normalization in DBMS?", "Instruments of monetary policy", "Features of sole proprietorship", "Explain the AIDA model", "Deadlock detection"];
+    $("#suggest").innerHTML = ideas.map(function (q) { return '<button type="button" class="chip suggest-chip">' + esc(q) + "</button>"; }).join("");
+    $("#suggest").addEventListener("click", function (e) {
+      var b = e.target.closest(".suggest-chip");
+      if (b) { input.value = b.textContent; run(); }
+    });
+
+    function render(q, d) {
+      var stems = d.terms || [];
+      if (!d.results || !d.results.length) {
+        out.innerHTML = '<div class="empty-state"><i class="fa-solid fa-magnifying-glass"></i><h3>Nothing found in the notes</h3>' +
+          "<p>Try different words (for example the topic name from your syllabus), search all subjects, or browse the subject page.</p>" +
+          '<a class="btn btn-ghost" href="feedback.html"><i class="fa-solid fa-upload"></i>Have notes on this? Upload them</a></div>';
+        return;
+      }
+      var cite = function (n) { return '<a class="cite" href="#res-' + n + '" title="See passage ' + n + '">' + n + "</a>"; };
+      var key = (d.keyPoints || []).length ? '<div class="form-card key-points"><h2><i class="fa-solid fa-lightbulb"></i>Key points from the notes</h2><ul>' +
+        d.keyPoints.map(function (k) { return "<li>" + highlight(k.text, stems) + cite(k.n) + "</li>"; }).join("") + "</ul></div>" : "";
+      out.innerHTML = key + '<div class="group-title"><h2>Matching passages</h2><span class="badge">' + d.results.length + "</span></div>" +
+        '<div class="passages">' + d.results.map(function (r) {
+          return '<article class="card passage" id="res-' + r.n + '"><div class="passage-head"><span class="passage-n">' + r.n + "</span><div>" +
+            '<a class="passage-title" href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.title) + "</a>" +
+            '<div class="passage-meta"><a href="subject.html?id=' + encodeURIComponent(r.subjectId) + '">' + esc(r.subject) + "</a> · " + esc(r.course) + " · page " + r.page + "</div></div></div>" +
+            "<p>" + highlight(r.snippet, stems) + "</p>" +
+            '<div class="passage-actions"><a class="btn btn-ghost btn-sm" href="' + esc(r.url) + '" target="_blank" rel="noopener"><i class="fa-regular fa-eye"></i>Open file (page ' + r.page + ")</a>" +
+            '<a class="btn btn-ghost btn-sm" href="subject.html?id=' + encodeURIComponent(r.subjectId) + '"><i class="fa-solid fa-book-open"></i>All ' + esc(r.subject) + " files</a></div></article>";
+        }).join("") + "</div>";
+    }
+
+    function run() {
+      var q = input.value.trim();
+      if (q.length < 2) { input.focus(); return; }
+      btn.disabled = true;
+      $("#suggest").hidden = true;
+      out.innerHTML = '<div class="thinking"><i class="fa-solid fa-spinner fa-spin"></i> Searching the notes…</div>';
+      try { history.replaceState(null, "", "ask.html?q=" + encodeURIComponent(q) + (sel.value ? "&subject=" + encodeURIComponent(sel.value) : "")); } catch (e) { /* not important */ }
+      fetch("/api/search?q=" + encodeURIComponent(q) + (sel.value ? "&subject=" + encodeURIComponent(sel.value) : ""))
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (d.error) throw new Error(d.error);
+          render(q, d);
+        })
+        .catch(function (err) {
+          out.innerHTML = '<div class="note msg-error"><i class="fa-solid fa-triangle-exclamation"></i><span>' +
+            esc(err && err.message && !/fetch|JSON/i.test(err.message) ? err.message : "Search isn't available right now. Please try again.") + "</span></div>";
+        })
+        .then(function () { btn.disabled = false; });
+    }
+    form.addEventListener("submit", function (e) { e.preventDefault(); run(); });
+    if (param("q")) { input.value = param("q"); run(); } else { input.focus(); }
   }
 
   function pageAbout() {
@@ -653,7 +725,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     var page = document.body.getAttribute("data-page");
     mountLayout(page === "subject" ? "browse" : page);
-    var run = { home: pageHome, browse: pageBrowse, subject: pageSubject, sgpa: pageSgpa, feedback: pageFeedback, about: pageAbout }[page];
+    var run = { home: pageHome, browse: pageBrowse, subject: pageSubject, sgpa: pageSgpa, feedback: pageFeedback, about: pageAbout, ask: pageAsk }[page];
     loadCommunity(function (changed) {  // newly approved uploads arrived after the page was drawn
       if (page === "subject" && changed.indexOf(param("id")) !== -1) pageSubject();
     });

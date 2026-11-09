@@ -43,6 +43,7 @@ WhatsApp groups and private drives; ScholarSpace puts it in one searchable place
 | 📚 **College & year browsing** | Pick your college (BBD University or ITM College) and year to see only the subjects you study. |
 | 🗂️ **Files grouped by type** | Each subject page splits Notes, PYQs, Practice and Books, with a filter box. |
 | 👁️ **View or download** | Files open in Google Drive's viewer, or download in one click. No sign-in needed. |
+| 🔎 **Ask Notes** | Search inside every note and paper; see the key lines and passages that answer your question. |
 | 🧮 **SGPA calculator** | Add subjects, credits and marks; SGPA, grades and average update live (10-point scale). |
 | 🌗 **Light & dark mode** | Follows the system theme, with a toggle. |
 | 📱 **Responsive** | Designed for phones first; works on tablets and desktops. |
@@ -95,7 +96,24 @@ Open http://localhost:8000.
    ```
 3. If the script prints `NOT LINKED:` lines, add those files or their folder to a subject in `SUBJECTS`
    (in `tools/build_catalog.py`; BBD University subjects use program `B`, ITM College subjects use `I`) and run it again. Optionally add a clean title in `tools/titles.tsv`.
-4. Commit and push; Vercel redeploys automatically.
+4. Rebuild the Ask Notes index (see **Ask Notes** below), then commit and push; Vercel redeploys automatically.
+
+## 🔎 Ask Notes (free full-text search)
+
+[`ask.html`](scholarspace%20main/ask.html) searches *inside* every note, paper and book: type a question and it shows the
+key lines and the exact passages that answer it, highlighted, with links to the file and page. No AI, no API keys, no cost.
+
+1. [`tools/rag/extract_text.py`](scholarspace%20main/tools/rag/extract_text.py) pulls the text, page by page, out of every published PDF, Word and PowerPoint file (scanned handwriting has no text and is skipped).
+2. [`tools/rag/build_index.py`](scholarspace%20main/tools/rag/build_index.py) splits it into ~1,000-character passages and builds a SQLite full-text index, `api/_rag/index.db`.
+3. [`api/search.py`](scholarspace%20main/api/search.py), a Vercel Python function using only the standard library, ranks passages with BM25 and picks the best-matching sentences. Results are cached by Vercel for a day.
+
+After adding material, rebuild the index:
+
+```bash
+cd "scholarspace main"
+python3 tools/rag/extract_text.py
+python3 tools/rag/build_index.py
+```
 
 ## ⬆️ Student uploads
 
