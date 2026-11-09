@@ -331,6 +331,18 @@ textarea.input { resize: vertical; min-height: 140px; }
   .college-switch .tab { justify-content: center; padding: 9px 6px; font-size: 0.85rem; white-space: nowrap; }
 }
 
+/* ---------- about page ---------- */
+.skill-chips { margin: 4px 0 18px; padding-top: 0; }
+.skill-chips .chip { font-size: 0.8rem; }
+.about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.about-cols .section-head { margin-bottom: 14px; }
+.exp-list { display: grid; gap: 18px; padding: 20px; }
+.exp { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.exp h3 { margin: 0 0 4px; font-size: 1rem; }
+.exp p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+.exp .badge { flex: none; }
+@media (max-width: 760px) { .about-cols { grid-template-columns: 1fr; } .exp { flex-direction: column; } }
+
 /* ---------- contribute / uploads ---------- */
 .contribute-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
 .side-stack { display: grid; gap: 16px; }
