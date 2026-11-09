@@ -18,22 +18,28 @@ import json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.dirname(HERE)
 ROOT_FOLDER = "1KDEa-DkdkNl6FuhUDO9upWKTaSeQlRNC"
+# BBA material lives in its own public Drive folder; its paths get the prefix "BBA/".
+#   python3 tools/crawl_drive.py 1GhW9UVlo35eLvbHPEsSv4NiCul0hkml6 tools/bba-drive-tree.tsv
+BBA_FOLDER = "1GhW9UVlo35eLvbHPEsSv4NiCul0hkml6"
+TREES = [("drive-tree.tsv", ""), ("bba-drive-tree.tsv", "BBA/")]
 
 # Never published on the site: paid books, a program, a saved web page, ads and junk.
 EXCLUDE = re.compile(
     r"^apache-maven|^quantum/|Claude_files|askbooks|quantum|^Syllabus/DumpStack|"
-    r"ESE/Very Important\.pdf$|\.(jpg|jpeg|png|log|tmp)$", re.I)
+    r"ESE/Very Important\.pdf$|\.(log|tmp)$|^(?!BBA/).*\.(jpg|jpeg|png)$|"
+    # BBA: classmates' submitted work (names and roll numbers), a class score sheet, a paid book, non-study files
+    r"^BBA/.*/Student Assignments/|^BBA/.*/EF Quiz\.xlsx$|RESEARCH_METHODOLOGY_C_R_KOTHARI|^BBA/To check/", re.I)
 
 # Each college's material stays separate: different syllabus, notes and exam difficulty.
 #   BBD University: loose files, "Sem 5", "6 Sem" and the BBDU sessional / semester papers.
 #   ITM College (AKTU): the "NOTES" folders inside "1st Year" ... "4th Year", and "Btech/".
 PROGRAMS = [
     {"id": "btech-cse", "name": "B.Tech CSE · BBD University", "short": "BBD University", "college": "BBD University",
-     "icon": "fa-building-columns",
+     "icon": "fa-building-columns", "course": "btech-cse",
      "blurb": "Arranged by the BBD University 2026-27 syllabus, with BBDU sessional and semester papers and practice sets.",
      "years": True},
     {"id": "itm-cse", "name": "B.Tech CSE · ITM College", "short": "ITM College (AKTU)", "college": "ITM College (AKTU)",
-     "icon": "fa-school",
+     "icon": "fa-school", "course": "btech-cse",
      "blurb": "ITM College material on the AKTU syllabus: unit-wise notes, one-shot notes and AKTU solutions.",
      "years": True},
     {"id": "btech-other", "name": "B.Tech Other Branches", "short": "Mechanical, Electrical, Civil", "icon": "fa-gears",
@@ -43,6 +49,9 @@ PROGRAMS = [
      "blurb": "Bachelor of Pharmacy study material."},
     {"id": "agriculture", "name": "B.Sc Agriculture", "short": "Agriculture", "icon": "fa-seedling",
      "blurb": "Study material for Agriculture students."},
+    {"id": "bba", "name": "BBA · BBD University", "short": "BBA", "college": "BBD University", "icon": "fa-briefcase",
+     "course": "bba", "years": True,
+     "blurb": "Bachelor of Business Administration, arranged by the BBD University 2023-24 (NEP 2020) syllabus."},
     {"id": "syllabus", "name": "Syllabus", "short": "Official syllabus PDFs", "icon": "fa-file-lines",
      "blurb": "Course structures and syllabi for B.Tech, B.Pharm and B.Arch programmes."},
 ]
@@ -52,6 +61,7 @@ def S(id, name, program, src, code="", year=None, sem="", group="core", icon="fa
                 group=group, icon=icon, alias=alias)
 
 I = "itm-cse"  # ITM College (AKTU)
+BB = "bba"  # BBA, BBD University
 B = "btech-cse"  # BBD University
 SUBJECTS = [
     # ================= BBD University · B.Tech CSE (2026-27 syllabus) =================
@@ -322,10 +332,48 @@ SUBJECTS = [
     S("pharmaceutical-analysis", "Pharmaceutical Analysis", "bpharm", ["Bpharma/1st Year/Pharmaceutical analysis"],
       year=1, sem="I", icon="fa-vial"),
     S("biochemistry", "Biochemistry", "agriculture", ["Agriculture"], icon="fa-dna"),
-    S("syllabus", "Syllabus PDFs", "syllabus", ["Syllabus"], icon="fa-file-lines"),
+
+    # ================= BBA · BBD University (2023-24 NEP syllabus) =================
+    # core = DSC, elective = DSE / GE, skill = vocational (VC) and co-curricular (CC) courses
+    S("bba-accounting", "Fundamentals of Accounting", BB, [], "NBBA5101", 1, "I", "core", icon="fa-calculator", alias="accounts accountancy"),
+    S("bba-business-environment", "Business Environment", BB, ["BBA/BBA 1 Year/Business Environment (NBBA5102)"], "NBBA5102", 1, "I", "core", icon="fa-earth-asia", alias="be fiscal monetary policy mrtp"),
+    S("bba-quantitative", "Quantitative Analysis for Management", BB, [], "NBBA5103", 1, "I", "core", icon="fa-chart-simple", alias="statistics qam"),
+    S("bba-managing-diversity", "Managing Organizational Diversity", BB, ["BBA/BBA 1 Year/Managing Organizational Diversity (NSMVC5101)"], "NSMVC5101", 1, "I", "skill", icon="fa-people-group", alias="diversity"),
+    S("bba-obpom", "Organization Behaviour & Principles of Management", BB, ["BBA/BBA 1 Year/Organization Behaviour and Principles of Management (NBBA5201)"], "NBBA5201", 1, "II", "core", icon="fa-sitemap", alias="ob pom obpom organisational behaviour"),
+    S("bba-business-maths", "Business Mathematics", BB, [], "NBBA5202", 1, "II", "core", icon="fa-square-root-variable", alias="maths"),
+    S("bba-business-organisation", "Business Organisation", BB, ["BBA/BBA 1 Year/Business Organisation (NBBA5203)"], "NBBA5203", 1, "II", "core", icon="fa-building", alias="bo business organization"),
+    S("bba-advertising", "Advertising & Personal Selling", BB, ["BBA/BBA 1 Year/Advertising and Personal Selling (NGE5704)"], "NGE5704", 1, "II", "elective", icon="fa-bullhorn", alias="aps advertising sales promotion"),
+    S("bba-logistics", "Logistics Management", BB, [], "NSMVC5201", 1, "II", "skill", icon="fa-truck", alias="logistics"),
+    S("bba-pom", "Production & Operations Management", BB, [], "NBBA5301", 2, "III", "core", icon="fa-industry", alias="pom production operations"),
+    S("bba-managerial-economics", "Managerial Economics", BB, ["BBA/BBA 2 Year/Managerial Economics (NBBA5302)"], "NBBA5302", 2, "III", "core", icon="fa-coins", alias="me economics pricing"),
+    S("bba-marketing-management", "Marketing Management", BB, ["BBA/BBA 2 Year/Marketing Management (NBBA5303)"], "NBBA5303", 2, "III", "core", icon="fa-store", alias="mm marketing channels"),
+    S("bba-nvpd", "New Venture Planning & Development", BB, ["BBA/BBA 2 Year/New Venture Planning and Development (NGE5706)"], "NGE5706", 2, "III", "elective", icon="fa-rocket", alias="nvpd startup venture capital"),
+    S("bba-financial-literacy", "Financial Literacy", BB, ["BBA/BBA 2 Year/Financial Literacy (NSMCC5301)"], "NSMCC5301", 2, "III", "skill", icon="fa-piggy-bank", alias="finance"),
+    S("bba-design-thinking", "Creativity & Design Thinking", BB, ["BBA/BBA 2 Year/Creativity and Design Thinking (NSMVC5301)"], "NSMVC5301", 2, "III", "skill", icon="fa-lightbulb", alias="design thinking creativity"),
+    S("bba-cost-accounting", "Cost & Management Accounting", BB, [], "NBBA5401", 2, "IV", "core", icon="fa-file-invoice-dollar", alias="cma cost accounting"),
+    S("bba-hrmd", "Human Resource Management & Development", BB, ["BBA/BBA 2 Year/Human Resource Management and Development (NBBA5402)"], "NBBA5402", 2, "IV", "core", icon="fa-user-tie", alias="hrm hrd hrmd"),
+    S("bba-business-law", "Business Law", BB, [], "NBBA5403", 2, "IV", "core", icon="fa-scale-balanced", alias="law"),
+    S("bba-investment-management", "Investment Management", BB, ["BBA/BBA 2 Year/Investment Management (NGE5708)"], "NGE5708", 2, "IV", "elective", icon="fa-arrow-trend-up", alias="im investment"),
+    S("bba-lpd", "Leadership & Personality Development", BB, ["BBA/BBA 2 Year/Leadership and Personality Development (NSMCC5401)"], "NSMCC5401", 2, "IV", "skill", icon="fa-user-graduate", alias="lpd leadership personality communication"),
+    S("bba-digital-marketing", "Digital Marketing", BB, ["BBA/BBA 2 Year/Digital Marketing (NSMVC5402)"], "NSMVC5402", 2, "IV", "skill", icon="fa-hashtag", alias="dm seo sem social media"),
+    S("bba-bps", "Business Policy & Strategy", BB, ["BBA/BBA 3 Year/Business Policy and Strategy (NBBA5501)"], "NBBA5501", 3, "V", "core", icon="fa-chess", alias="bps strategy"),
+    S("bba-project-management", "Project Management", BB, ["BBA/BBA 3 Year/Project Management (NBBA5502)"], "NBBA5502", 3, "V", "core", icon="fa-list-check", alias="pm"),
+    S("bba-financial-management", "Financial Management", BB, ["BBA/BBA 3 Year/Financial Management (NBBA5503)"], "NBBA5503", 3, "V", "core", icon="fa-sack-dollar", alias="fm finance"),
+    S("bba-consumer-behaviour", "Consumer Behaviour", BB, ["BBA/BBA 3 Year/Consumer Behaviour (NDSE57102)"], "NDSE57102", 3, "V", "elective", icon="fa-cart-shopping", alias="cb"),
+    S("bba-financial-services", "Financial Services", BB, ["BBA/BBA 3 Year/Financial Services (NGE5710)"], "NGE5710", 3, "V", "elective", icon="fa-building-columns", alias="fs"),
+    S("bba-entrepreneurial-finance", "Entrepreneurial Finance", BB, ["BBA/BBA 3 Year/Entrepreneurial Finance (NSMVC5501)"], "NSMVC5501", 3, "V", "skill", icon="fa-hand-holding-dollar", alias="ef financial statements"),
+    S("bba-ibm", "International Business Management", BB, ["BBA/BBA 3 Year/International Business Management (NBBA5601)"], "NBBA5601", 3, "VI", "core", icon="fa-globe", alias="ibm international business"),
+    S("bba-esbm", "Entrepreneurship & Small Business Management", BB, ["BBA/BBA 3 Year/Entrepreneurship and Small Business Management (NBBA5602)"], "NBBA5602", 3, "VI", "core", icon="fa-shop", alias="esbm msme sidbi dic"),
+    S("bba-rural-management", "Rural Management", BB, ["BBA/BBA 3 Year/Rural Management (NBBA5603)"], "NBBA5603", 3, "VI", "core", icon="fa-tractor", alias="rural"),
+    S("bba-research-methodology", "Research Methodology", BB, ["BBA/BBA 3 Year/Research Methodology (NDSE57104)"], "NDSE57104", 3, "VI", "elective", icon="fa-magnifying-glass-chart", alias="rm research"),
+    S("bba-banking-insurance", "Banking & Insurance", BB, [], "NBBA5701", 4, "VII", "core", icon="fa-landmark", alias="banking insurance"),
+    S("bba-brand-management", "Brand Management", BB, [], "NBBA5801", 4, "VIII", "core", icon="fa-tag", alias="brand"),
+
+    S("syllabus", "Syllabus PDFs", "syllabus", ["Syllabus", "BBA/BBA Syllabus 2023-24 onwards (NEP 2020).pdf"],
+      icon="fa-file-lines"),
 ]
 
-EXT = re.compile(r"\.(pdf|docx?|pptx?|xlsx?|txt)$", re.I)
+EXT = re.compile(r"\.(pdf|docx?|pptx?|xlsx?|txt|jpe?g|png)$", re.I)
 TYPES = [  # (type, pattern on "title + path"), first match wins
     ("syllabus", r"syllabus|course structure|evaluation scheme|regulations"),
     ("papers", r"question paper|sessional|semester|\bpyq\b|exam paper|\bpaper\b|final 20"),
@@ -350,8 +398,14 @@ def words(s):
 
 
 def main():
-    tree = [l.rstrip("\n").split("\t") for l in open(os.path.join(HERE, "drive-tree.tsv")) if l.strip()]
+    tree = []
+    for name, prefix in TREES:
+        for l in open(os.path.join(HERE, name)):
+            if l.strip():
+                p, k, i = l.rstrip("\n").split("\t")
+                tree.append([(prefix + p).rstrip("/"), k, i])
     files = {p: i for p, k, i in tree if k == "file" and not EXCLUDE.search(p)}
+    hidden = [p for p, k, i in tree if k == "file" and EXCLUDE.search(p)]
     folders = {p: i for p, k, i in tree if k == "folder"}
     titles = {}
     tpath = os.path.join(HERE, "titles.tsv")
@@ -407,7 +461,9 @@ def main():
             ext = (EXT.search(p).group(1).lower() if EXT.search(p) else "file")
             items.append({"t": short, "k": kind, "id": files[p], "x": ext})
         items.sort(key=lambda it: [int(c) if c.isdigit() else c.lower() for c in re.split(r"(\d+)", it["t"])])
-        drive = [folders[f] for f in s["src"] if not EXT.search(f) and f in folders]
+        # no "open in Drive" button for a folder that holds files kept off the site
+        drive = [folders[f] for f in s["src"] if not EXT.search(f) and f in folders
+                 and not any(h.startswith(f + "/") for h in hidden)]
         out_subjects.append({k: v for k, v in {
             "id": s["id"], "name": s["name"], "program": s["program"], "code": s["code"], "year": s["year"],
             "sem": s["sem"], "group": s["group"], "icon": s["icon"], "alias": s["alias"], "folders": drive,

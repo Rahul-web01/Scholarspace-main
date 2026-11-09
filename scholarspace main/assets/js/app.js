@@ -28,6 +28,7 @@
     "group-b": { title: "Group B", note: "Studied in Semester I or II, depending on your section." },
     elective: { title: "Electives", note: "Pick the electives offered in your semester." },
     open: { title: "Open electives & value-added courses", note: "Common courses taken alongside your branch subjects." },
+    skill: { title: "Skill & value-added courses", note: "Vocational and co-curricular courses offered alongside the core subjects." },
     more: { title: "More subjects", note: "From earlier syllabi. Still useful for practice and reference." }
   };
   var EXT_ICON = { pdf: "fa-file-pdf", docx: "fa-file-word", doc: "fa-file-word", pptx: "fa-file-powerpoint", ppt: "fa-file-powerpoint", xlsx: "fa-file-excel" };
@@ -59,7 +60,7 @@
     return /^fa-(python|java)$/.test(icon) ? "fa-brands " + icon : "fa-solid " + icon;
   }
   function isYearly(pid) { var p = program(pid); return !!(p && p.years); }
-  function yearPrograms() { return CAT.programs.filter(function (p) { return p.years; }); }
+  function yearPrograms(course) { return CAT.programs.filter(function (p) { return p.years && (!course || p.course === course); }); }
   function browseUrl(s) {
     return "browse.html?program=" + s.program + (isYearly(s.program) && s.year ? "&year=" + s.year : "");
   }
@@ -124,8 +125,8 @@
       '<div class="socials"><a href="' + CONTACT.github + '" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>' +
       '<a href="' + CONTACT.linkedin + '" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>' +
       '<a href="mailto:' + CONTACT.email + '" aria-label="Email"><i class="fa-solid fa-envelope"></i></a></div></div>' +
-      "<div><h4>B.Tech CSE</h4><ul>" +
-      yearPrograms().map(function (p) { return '<li><a href="browse.html?program=' + p.id + '&year=1">' + esc(p.short) + "</a></li>"; }).join("") +
+      "<div><h4>Year-wise courses</h4><ul>" +
+      yearPrograms().map(function (p) { return '<li><a href="browse.html?program=' + p.id + '&year=1">' + esc(p.name) + "</a></li>"; }).join("") +
       "</ul></div>" +
       "<div><h4>Courses</h4><ul>" +
       CAT.programs.filter(function (p) { return !p.years; }).map(function (p) {
@@ -310,8 +311,8 @@
     if (!pid || !program(pid)) {
       document.title = "Browse study material | ScholarSpace";
       app.innerHTML = '<section class="page-head"><div class="container">' + crumbs([["Home", "index.html"], ["Browse"]]) +
-        "<h1>Browse study material</h1><p class=\"lead\">Choose your college and year. BBD University and ITM College (AKTU) follow different syllabi and exam patterns, so their material is kept separate.</p></div></section>" +
-        '<section class="section" style="padding-top:20px"><div class="container"><div class="section-head"><h2>B.Tech Computer Science</h2></div><div id="colleges"></div>' +
+        "<h1>Browse study material</h1><p class=\"lead\">Choose your course and year. B.Tech CSE material is kept separate for BBD University and ITM College (AKTU), because their syllabi and exam patterns differ.</p></div></section>" +
+        '<section class="section" style="padding-top:20px"><div class="container"><div class="section-head"><h2>Year-wise courses</h2></div><div id="colleges"></div>' +
         '<div class="section-head" style="margin-top:40px"><h2>More courses</h2></div><div class="grid grid-3" id="programs"></div></div></section>';
       $("#colleges").innerHTML = collegeBlocks();
       $("#programs").innerHTML = CAT.programs.filter(function (p) { return !p.years; }).map(function (p) {
@@ -330,14 +331,14 @@
     var title = hasYears ? YEARS[year].name + " · " + p.short : p.name;
     document.title = title + " | ScholarSpace";
 
-    var groupOrder = hasYears ? ["core", "group-a", "group-b", "elective", "open", "more"] : [];
+    var groupOrder = hasYears ? ["core", "group-a", "group-b", "elective", "open", "skill", "more"] : [];
     if (!hasYears) list.forEach(function (s) { var g = s.group || "core"; if (groupOrder.indexOf(g) === -1) groupOrder.push(g); });
 
     app.innerHTML = '<section class="page-head"><div class="container">' +
       crumbs([["Home", "index.html"], ["Browse", "browse.html"]].concat(hasYears ? [[p.short, "browse.html?program=" + pid], [YEARS[year].name]] : [[p.name]])) +
       "<h1>" + esc(hasYears ? p.name : p.name) + "</h1>" +
       '<p class="lead">' + (hasYears ? YEARS[year].name + " (" + YEARS[year].sems + "). " : "") + esc(p.blurb) + "</p>" +
-      (hasYears ? '<div class="college-switch" role="group" aria-label="College"><span>College</span>' + yearPrograms().map(function (q) {
+      (hasYears && yearPrograms(p.course).length > 1 ? '<div class="college-switch" role="group" aria-label="College"><span>College</span>' + yearPrograms(p.course).map(function (q) {
         return '<a class="tab' + (q.id === pid ? " active" : "") + '"' + (q.id === pid ? ' aria-current="true"' : "") + ' href="browse.html?program=' + q.id + "&year=" + year + '">' +
           '<i class="fa-solid ' + q.icon + '"></i>' + esc(q.short) + "</a>";
       }).join("") + "</div>" : "") +

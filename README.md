@@ -32,7 +32,8 @@ WhatsApp groups and private drives; ScholarSpace puts it in one searchable place
   * **ITM College (AKTU)**, with AKTU-syllabus notes (core subjects, electives, open electives).
 
   The two colleges have different syllabi, notes and exam difficulty, so their material is never mixed.
-* **Other courses too**: Mechanical, Electrical and Civil subjects, humanities, B.Pharm and Agriculture, plus official syllabus PDFs.
+* **BBA (BBD University), year by year**, matched to the 2023-24 NEP syllabus (core subjects, electives, skill courses).
+* **Other courses too**: Mechanical, Electrical and Civil subjects, B.Pharm and Agriculture, plus official syllabus PDFs.
 
 ## ✨ Features
 
@@ -89,6 +90,7 @@ Open http://localhost:8000.
    ```bash
    cd "scholarspace main"
    python3 tools/crawl_drive.py 1KDEa-DkdkNl6FuhUDO9upWKTaSeQlRNC tools/drive-tree.tsv
+   python3 tools/crawl_drive.py 1GhW9UVlo35eLvbHPEsSv4NiCul0hkml6 tools/bba-drive-tree.tsv   # BBA folder
    python3 tools/build_catalog.py
    ```
 3. If the script prints `NOT LINKED:` lines, add those files or their folder to a subject in `SUBJECTS`
