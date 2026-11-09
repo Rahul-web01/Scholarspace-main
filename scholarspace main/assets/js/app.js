@@ -540,6 +540,12 @@
     calc();
   }
 
+  function pageAbout() {
+    $("#ab-files").textContent = fileCount(CAT.subjects) + "+";
+    $("#ab-subjects").textContent = CAT.subjects.filter(function (s) { return s.files && s.files.length; }).length;
+    $("#ab-courses").textContent = CAT.programs.filter(function (p) { return p.id !== "syllabus"; }).length;
+  }
+
   function pageFeedback() {
     /* ---- request / feedback by email ---- */
     var topicParam = param("topic");
@@ -647,7 +653,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     var page = document.body.getAttribute("data-page");
     mountLayout(page === "subject" ? "browse" : page);
-    var run = { home: pageHome, browse: pageBrowse, subject: pageSubject, sgpa: pageSgpa, feedback: pageFeedback }[page];
+    var run = { home: pageHome, browse: pageBrowse, subject: pageSubject, sgpa: pageSgpa, feedback: pageFeedback, about: pageAbout }[page];
     loadCommunity(function (changed) {  // newly approved uploads arrived after the page was drawn
       if (page === "subject" && changed.indexOf(param("id")) !== -1) pageSubject();
     });

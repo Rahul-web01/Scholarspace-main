@@ -332,16 +332,13 @@ textarea.input { resize: vertical; min-height: 140px; }
 }
 
 /* ---------- about page ---------- */
-.skill-chips { margin: 4px 0 18px; padding-top: 0; }
-.skill-chips .chip { font-size: 0.8rem; }
-.about-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.about-cols .section-head { margin-bottom: 14px; }
-.exp-list { display: grid; gap: 18px; padding: 20px; }
-.exp { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.exp h3 { margin: 0 0 4px; font-size: 1rem; }
-.exp p { margin: 0; color: var(--muted); font-size: 0.92rem; }
-.exp .badge { flex: none; }
-@media (max-width: 760px) { .about-cols { grid-template-columns: 1fr; } .exp { flex-direction: column; } }
+.about-stats { max-width: none; margin: 28px 0 0; }
+.story { display: grid; grid-template-columns: 1.2fr 1fr; gap: 28px; align-items: start; }
+.story h2 { margin-top: 0; }
+.story p { font-size: 1.02rem; }
+.cta-band { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+@media (max-width: 760px) { .story { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .about-stats { grid-template-columns: repeat(2, 1fr); } }
 
 /* ---------- contribute / uploads ---------- */
 .contribute-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; align-items: start; }
