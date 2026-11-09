@@ -26,7 +26,8 @@
     core: { title: "Core subjects", note: "" },
     "group-a": { title: "Group A", note: "Studied in Semester I or II, depending on your section." },
     "group-b": { title: "Group B", note: "Studied in Semester I or II, depending on your section." },
-    elective: { title: "Professional electives", note: "Pick the electives offered in your semester." },
+    elective: { title: "Electives", note: "Pick the electives offered in your semester." },
+    open: { title: "Open electives & value-added courses", note: "Common courses taken alongside your branch subjects." },
     more: { title: "More subjects", note: "From earlier syllabi. Still useful for practice and reference." }
   };
   var EXT_ICON = { pdf: "fa-file-pdf", docx: "fa-file-word", doc: "fa-file-word", pptx: "fa-file-powerpoint", ppt: "fa-file-powerpoint", xlsx: "fa-file-excel" };
@@ -57,8 +58,29 @@
   function brandIcon(icon) {
     return /^fa-(python|java)$/.test(icon) ? "fa-brands " + icon : "fa-solid " + icon;
   }
+  function isYearly(pid) { var p = program(pid); return !!(p && p.years); }
+  function yearPrograms() { return CAT.programs.filter(function (p) { return p.years; }); }
   function browseUrl(s) {
-    return "browse.html?program=" + s.program + (s.program === "btech-cse" && s.year ? "&year=" + s.year : "");
+    return "browse.html?program=" + s.program + (isYearly(s.program) && s.year ? "&year=" + s.year : "");
+  }
+  /* The same subject at the other college ("dbms" <-> "itm-dbms"), if it has files. */
+  function counterpart(s) {
+    var other = /^itm-/.test(s.id) ? subject(s.id.slice(4)) : subject("itm-" + s.id);
+    return other && other.files && other.files.length ? other : null;
+  }
+  function collegeBlocks(cls) {
+    return yearPrograms().map(function (p) {
+      var all = subjectsOf(p.id);
+      return '<div class="college' + (cls ? " " + cls : "") + '"><div class="college-head"><span class="card-icon"><i class="fa-solid ' + p.icon + '"></i></span>' +
+        "<div><h3>" + esc(p.name) + "</h3><p>" + esc(p.blurb) + "</p></div>" +
+        '<span class="badge">' + plural(fileCount(all), "file") + "</span></div>" +
+        '<div class="grid grid-4">' + [1, 2, 3, 4].map(function (y) {
+          var list = all.filter(function (s) { return s.year === y; });
+          return '<a class="card year-card" href="browse.html?program=' + p.id + "&year=" + y + '">' +
+            '<span class="year-num">0' + y + "</span><h3>" + YEARS[y].name + "</h3><p>" + YEARS[y].sems + "</p>" +
+            '<div class="card-foot"><span>' + plural(list.length, "subject") + " · " + plural(fileCount(list), "file") + '</span><i class="fa-solid fa-arrow-right arrow"></i></div></a>';
+        }).join("") + "</div></div>";
+    }).join("");
   }
   function storage(key, val) {
     try {
@@ -103,10 +125,10 @@
       '<a href="' + CONTACT.linkedin + '" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>' +
       '<a href="mailto:' + CONTACT.email + '" aria-label="Email"><i class="fa-solid fa-envelope"></i></a></div></div>' +
       "<div><h4>B.Tech CSE</h4><ul>" +
-      [1, 2, 3, 4].map(function (y) { return '<li><a href="browse.html?program=btech-cse&year=' + y + '">' + YEARS[y].name + "</a></li>"; }).join("") +
+      yearPrograms().map(function (p) { return '<li><a href="browse.html?program=' + p.id + '&year=1">' + esc(p.short) + "</a></li>"; }).join("") +
       "</ul></div>" +
       "<div><h4>Courses</h4><ul>" +
-      CAT.programs.filter(function (p) { return p.id !== "btech-cse"; }).map(function (p) {
+      CAT.programs.filter(function (p) { return !p.years; }).map(function (p) {
         return '<li><a href="browse.html?program=' + p.id + '">' + esc(p.name) + "</a></li>";
       }).join("") + "</ul></div>" +
       '<div><h4>ScholarSpace</h4><ul><li><a href="sgpa.html">SGPA Calculator</a></li><li><a href="about.html">About</a></li>' +
@@ -163,13 +185,14 @@
       terms.forEach(function (t) { if (n.indexOf(t) === 0) sc += 3; else if ((" " + n).indexOf(" " + t) !== -1) sc += 2; else if (n.indexOf(t) !== -1) sc += 1; });
       return sc;
     }
-    var subs = idx.subjects.filter(match).sort(function (a, b) { return score(b, b.s.name) - score(a, a.s.name); });
+    function has(e) { return e.s.files && e.s.files.length ? 1 : 0; }
+    var subs = idx.subjects.filter(match).sort(function (a, b) { return score(b, b.s.name) - score(a, a.s.name) || has(b) - has(a); });
     var files = idx.files.filter(match).sort(function (a, b) { return score(b, b.f.t) - score(a, a.f.t); });
     return { subjects: subs.map(function (e) { return e.s; }), files: files };
   }
   function subjectMeta(s) {
     var p = program(s.program), bits = [];
-    if (s.program === "btech-cse" && s.year) bits.push("B.Tech CSE · " + YEARS[s.year].name);
+    if (p && p.years && s.year) bits.push(p.short + " · " + YEARS[s.year].name);
     else if (p) bits.push(p.name);
     if (s.code) bits.push(s.code);
     return bits.join(" · ");
@@ -199,7 +222,7 @@
         html += '<div class="sr-group">Files</div>' + r.files.slice(0, 10).map(function (e) {
           return '<a class="sr-item t-' + e.f.k + '" href="' + fileUrl(e.f.id) + '" target="_blank" rel="noopener">' +
             '<span class="sr-icon" style="background:var(--c-soft);color:var(--c)"><i class="fa-solid ' + TYPES[e.f.k].icon + '"></i></span>' +
-            '<span class="sr-text"><strong>' + esc(e.f.t) + "</strong><small>" + esc(e.s.name) + " · " + TYPES[e.f.k].label + "</small></span></a>";
+            '<span class="sr-text"><strong>' + esc(e.f.t) + "</strong><small>" + esc(e.s.name) + (program(e.s.program) && program(e.s.program).college ? " · " + esc(program(e.s.program).college) : "") + " · " + TYPES[e.f.k].label + "</small></span></a>";
         }).join("");
         if (r.files.length > 10) html += '<div class="sr-empty">' + (r.files.length - 10) + " more files match. Try a more specific search.</div>";
       }
@@ -252,20 +275,14 @@
 
   /* ---------- pages ---------- */
   function pageHome() {
-    var cse = subjectsOf("btech-cse");
     $("#stat-files").textContent = fileCount(CAT.subjects) + "+";
     $("#stat-subjects").textContent = CAT.subjects.filter(function (s) { return s.files && s.files.length; }).length;
     $("#stat-courses").textContent = CAT.programs.filter(function (p) { return p.id !== "syllabus"; }).length;
     mountSearch($("#search-input"), $("#search-results"));
 
-    $("#years").innerHTML = [1, 2, 3, 4].map(function (y) {
-      var list = cse.filter(function (s) { return s.year === y; });
-      return '<a class="card year-card fade-in" href="browse.html?program=btech-cse&year=' + y + '">' +
-        '<span class="year-num">0' + y + "</span><h3>" + YEARS[y].name + "</h3><p>" + YEARS[y].sems + "</p>" +
-        '<div class="card-foot"><span>' + plural(list.length, "subject") + " · " + plural(fileCount(list), "file") + '</span><i class="fa-solid fa-arrow-right arrow"></i></div></a>';
-    }).join("");
+    $("#colleges").innerHTML = collegeBlocks("fade-in");
 
-    $("#programs").innerHTML = CAT.programs.filter(function (p) { return p.id !== "btech-cse"; }).map(function (p) {
+    $("#programs").innerHTML = CAT.programs.filter(function (p) { return !p.years; }).map(function (p) {
       var list = subjectsOf(p.id);
       return '<a class="card fade-in" href="browse.html?program=' + p.id + '"><span class="card-icon"><i class="fa-solid ' + p.icon + '"></i></span>' +
         "<h3>" + esc(p.name) + "</h3><p>" + esc(p.blurb) + "</p>" +
@@ -293,16 +310,11 @@
     if (!pid || !program(pid)) {
       document.title = "Browse study material | ScholarSpace";
       app.innerHTML = '<section class="page-head"><div class="container">' + crumbs([["Home", "index.html"], ["Browse"]]) +
-        "<h1>Browse study material</h1><p class=\"lead\">Choose your course. B.Tech CSE is arranged year by year using the BBD University 2026-27 syllabus.</p></div></section>" +
-        '<section class="section" style="padding-top:20px"><div class="container"><div class="section-head"><h2>B.Tech Computer Science</h2></div><div class="grid grid-4" id="years"></div>' +
+        "<h1>Browse study material</h1><p class=\"lead\">Choose your college and year. BBD University and ITM College (AKTU) follow different syllabi and exam patterns, so their material is kept separate.</p></div></section>" +
+        '<section class="section" style="padding-top:20px"><div class="container"><div class="section-head"><h2>B.Tech Computer Science</h2></div><div id="colleges"></div>' +
         '<div class="section-head" style="margin-top:40px"><h2>More courses</h2></div><div class="grid grid-3" id="programs"></div></div></section>';
-      var cse = subjectsOf("btech-cse");
-      $("#years").innerHTML = [1, 2, 3, 4].map(function (y) {
-        var list = cse.filter(function (s) { return s.year === y; });
-        return '<a class="card year-card" href="browse.html?program=btech-cse&year=' + y + '"><span class="year-num">0' + y + "</span><h3>" + YEARS[y].name +
-          "</h3><p>" + YEARS[y].sems + '</p><div class="card-foot"><span>' + plural(list.length, "subject") + " · " + plural(fileCount(list), "file") + '</span><i class="fa-solid fa-arrow-right arrow"></i></div></a>';
-      }).join("");
-      $("#programs").innerHTML = CAT.programs.filter(function (p) { return p.id !== "btech-cse"; }).map(function (p) {
+      $("#colleges").innerHTML = collegeBlocks();
+      $("#programs").innerHTML = CAT.programs.filter(function (p) { return !p.years; }).map(function (p) {
         var list = subjectsOf(p.id);
         return '<a class="card" href="browse.html?program=' + p.id + '"><span class="card-icon"><i class="fa-solid ' + p.icon + '"></i></span><h3>' + esc(p.name) +
           "</h3><p>" + esc(p.blurb) + '</p><div class="card-foot"><span>' + plural(fileCount(list), "file") + '</span><i class="fa-solid fa-arrow-right arrow"></i></div></a>';
@@ -318,13 +330,17 @@
     var title = hasYears ? YEARS[year].name + " · " + p.short : p.name;
     document.title = title + " | ScholarSpace";
 
-    var groupOrder = hasYears ? ["core", "group-a", "group-b", "elective", "more"] : [];
+    var groupOrder = hasYears ? ["core", "group-a", "group-b", "elective", "open", "more"] : [];
     if (!hasYears) list.forEach(function (s) { var g = s.group || "core"; if (groupOrder.indexOf(g) === -1) groupOrder.push(g); });
 
     app.innerHTML = '<section class="page-head"><div class="container">' +
       crumbs([["Home", "index.html"], ["Browse", "browse.html"]].concat(hasYears ? [[p.short, "browse.html?program=" + pid], [YEARS[year].name]] : [[p.name]])) +
       "<h1>" + esc(hasYears ? p.name : p.name) + "</h1>" +
       '<p class="lead">' + (hasYears ? YEARS[year].name + " (" + YEARS[year].sems + "). " : "") + esc(p.blurb) + "</p>" +
+      (hasYears ? '<div class="college-switch" role="group" aria-label="College"><span>College</span>' + yearPrograms().map(function (q) {
+        return '<a class="tab' + (q.id === pid ? " active" : "") + '"' + (q.id === pid ? ' aria-current="true"' : "") + ' href="browse.html?program=' + q.id + "&year=" + year + '">' +
+          '<i class="fa-solid ' + q.icon + '"></i>' + esc(q.short) + "</a>";
+      }).join("") + "</div>" : "") +
       '<div class="toolbar">' +
       (hasYears ? '<div class="tabs year-tabs" role="tablist" aria-label="Year">' + [1, 2, 3, 4].map(function (y) {
         return '<a class="tab' + (y === year ? " active" : "") + '" role="tab" aria-selected="' + (y === year) + '" href="browse.html?program=' + pid + "&year=" + y + '">' + YEARS[y].name + "</a>";
@@ -353,6 +369,7 @@
   function pageSubject() {
     var s = subject(param("id"));
     var app = $("#app");
+    if (!s && subject("itm-" + param("id"))) { location.replace("subject.html?id=itm-" + encodeURIComponent(param("id"))); return; }
     if (!s) {
       document.title = "Subject not found | ScholarSpace";
       app.innerHTML = '<section class="section"><div class="container"><div class="empty-state"><i class="fa-solid fa-circle-question"></i><h3>Subject not found</h3>' +
@@ -362,15 +379,23 @@
     var p = program(s.program);
     document.title = s.name + " notes, PYQs & practice sets | ScholarSpace";
     var trail = [["Home", "index.html"], ["Browse", "browse.html"]];
-    if (s.program === "btech-cse" && s.year) trail.push([p.short, "browse.html?program=btech-cse"], [YEARS[s.year].name, browseUrl(s)]);
+    if (p && p.years && s.year) trail.push([p.short, "browse.html?program=" + s.program], [YEARS[s.year].name, browseUrl(s)]);
     else if (s.program !== "syllabus") trail.push([p.name, browseUrl(s)]);
     trail.push([s.name]);
 
     var c = counts(s), files = s.files || [];
+    var other = counterpart(s), otherNote = "";
+    if (other) {
+      var op = program(other.program);
+      otherNote = '<a class="other-college" href="subject.html?id=' + encodeURIComponent(other.id) + '"><i class="fa-solid ' + op.icon + '"></i>' +
+        "<span><b>" + esc(other.name) + " at " + esc(op.college) + "</b>" + plural(other.files.length, "file") +
+        " · different syllabus and exam pattern</span><i class=\"fa-solid fa-arrow-right\"></i></a>";
+    }
     var tabs = ["all"].concat(TYPE_ORDER.filter(function (k) { return c[k]; }));
     var meta = [];
-    if (s.program === "btech-cse" && s.year) meta.push('<span class="badge"><i class="fa-solid fa-layer-group"></i>' + YEARS[s.year].name + "</span>");
-    else if (p && s.program !== "syllabus") meta.push('<span class="badge"><i class="fa-solid ' + p.icon + '"></i>' + esc(p.name) + "</span>");
+    if (p && p.college) meta.push('<span class="badge badge-college"><i class="fa-solid ' + (p.years ? p.icon : "fa-school") + '"></i>' + esc(p.college) + "</span>");
+    if (p && p.years && s.year) meta.push('<span class="badge"><i class="fa-solid fa-layer-group"></i>' + YEARS[s.year].name + "</span>");
+    else if (p && !p.years && s.program !== "syllabus") meta.push('<span class="badge"><i class="fa-solid ' + p.icon + '"></i>' + esc(p.name) + "</span>");
     if (s.code) meta.push('<span class="badge"><i class="fa-solid fa-hashtag"></i>' + esc(s.code) + "</span>");
     if (s.sem) meta.push('<span class="badge"><i class="fa-regular fa-calendar"></i>Semester ' + esc(s.sem) + "</span>");
     meta.push('<span class="badge"><i class="fa-regular fa-file-lines"></i>' + files.length + " files</span>");
@@ -390,7 +415,7 @@
           (k === "all" ? "All" : (TYPES[k].short || TYPES[k].label)) + '<span class="count">' + n + "</span></button>";
       }).join("") + '</div><label class="filter"><i class="fa-solid fa-magnifying-glass"></i><span class="sr-only">Search files</span>' +
         '<input id="filter" type="search" placeholder="Search in ' + esc(s.name) + '…" autocomplete="off"></label></div>' : "") +
-      '</div></section><section><div class="container"><div id="files"></div></div></section>';
+      '</div></section><section><div class="container"><div id="files"></div>' + otherNote + '</div></section>';
 
     if (!files.length) {
       $("#files").innerHTML = '<div class="empty-state"><i class="fa-solid fa-hourglass-half"></i><h3>Material coming soon</h3>' +

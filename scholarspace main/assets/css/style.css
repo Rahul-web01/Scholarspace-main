@@ -305,3 +305,28 @@ textarea.input { resize: vertical; min-height: 140px; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 .to-top { position: fixed; right: 18px; bottom: 18px; z-index: 30; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 .to-top.show { opacity: 1; pointer-events: auto; }
+
+/* ---------- colleges (BBD University / ITM College) ---------- */
+.college + .college { margin-top: 36px; }
+.college-head { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.college-head > div { flex: 1; min-width: 0; }
+.college-head h3 { margin: 0; font-size: 1.15rem; }
+.college-head p { margin: 2px 0 0; color: var(--muted); font-size: 0.92rem; }
+.college-head .badge { flex: none; }
+.college-switch { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 18px 0 -6px; }
+.college-switch > span { color: var(--muted); font-size: 0.85rem; font-weight: 600; margin-right: 4px; }
+.college-switch .tab { border: 1px solid var(--border); background: var(--surface); text-decoration: none; }
+.college-switch .tab.active { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
+.badge-college { background: var(--primary-soft); color: var(--primary); border-color: transparent; }
+.other-college { display: flex; align-items: center; gap: 14px; margin: 28px 0 8px; padding: 14px 18px; border: 1px dashed var(--border); border-radius: var(--radius); background: var(--surface); color: var(--muted); text-decoration: none; font-size: 0.92rem; }
+.other-college:hover { border-color: var(--primary); color: var(--text); }
+.other-college > i:first-child { color: var(--primary); font-size: 1.1rem; }
+.other-college span { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.other-college b { color: var(--text); font-weight: 650; }
+@media (max-width: 560px) {
+  .college-head { flex-wrap: wrap; }
+  .college-head .badge { order: 3; }
+  .college-switch { display: grid; grid-template-columns: 1fr 1fr; }
+  .college-switch > span { grid-column: 1 / -1; }
+  .college-switch .tab { justify-content: center; padding: 9px 6px; font-size: 0.85rem; white-space: nowrap; }
+}

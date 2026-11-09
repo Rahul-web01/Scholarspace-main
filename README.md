@@ -27,7 +27,11 @@
 WhatsApp groups and private drives; ScholarSpace puts it in one searchable place.
 
 * **750+ files** across **90 subjects**: notes, previous year question papers (PYQs), practice sets, assignments and books.
-* **B.Tech CSE, year by year**, matched to the BBD University 2026-27 syllabus (core subjects, Group A/B, electives).
+* **B.Tech CSE, separate for each college, year by year**:
+  * **BBD University**, matched to the 2026-27 syllabus (core subjects, Group A/B, electives).
+  * **ITM College (AKTU)**, with AKTU-syllabus notes (core subjects, electives, open electives).
+
+  The two colleges have different syllabi, notes and exam difficulty, so their material is never mixed.
 * **Other courses too**: Mechanical, Electrical and Civil subjects, humanities, B.Pharm and Agriculture, plus official syllabus PDFs.
 
 ## ✨ Features
@@ -35,7 +39,7 @@ WhatsApp groups and private drives; ScholarSpace puts it in one searchable place
 | Feature | Description |
 | :--- | :--- |
 | 🔎 **Instant search** | Search every subject and file from the home page (press <kbd>/</kbd>). |
-| 📚 **Year-wise browsing** | Pick your year and see exactly the subjects you study, with subject codes and semesters. |
+| 📚 **College & year browsing** | Pick your college (BBD University or ITM College) and year to see only the subjects you study. |
 | 🗂️ **Files grouped by type** | Each subject page splits Notes, PYQs, Practice and Books, with a filter box. |
 | 👁️ **View or download** | Files open in Google Drive's viewer, or download in one click. No sign-in needed. |
 | 🧮 **SGPA calculator** | Add subjects, credits and marks; SGPA, grades and average update live (10-point scale). |
@@ -88,7 +92,7 @@ Open http://localhost:8000.
    python3 tools/build_catalog.py
    ```
 3. If the script prints `NOT LINKED:` lines, add those files or their folder to a subject in `SUBJECTS`
-   (in `tools/build_catalog.py`) and run it again. Optionally add a clean title in `tools/titles.tsv`.
+   (in `tools/build_catalog.py`; BBD University subjects use program `B`, ITM College subjects use `I`) and run it again. Optionally add a clean title in `tools/titles.tsv`.
 4. Commit and push; Vercel redeploys automatically.
 
 ## 🔮 Roadmap
