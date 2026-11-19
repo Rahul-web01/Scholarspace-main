@@ -1,0 +1,5 @@
+# Files from macOS, editors and compilers that do not belong in the repository
+__MACOSX/
+.DS_Store
+.vscode/
+*.class
